@@ -22,7 +22,7 @@
   "scripts": {
     "start": "node bin/cplus.js dash",
     "demo": "node bin/cplus.js demo",
-    "test": "node --test test/",
+    "test": "node scripts/test.mjs",
     "bench": "node scripts/bench.mjs",
     "screenshots": "node scripts/screenshots.mjs",
     "library": "node scripts/build-library.mjs && node scripts/agents-doc.mjs"
