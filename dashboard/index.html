@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClaudePlus</title>
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="components.css">
+</head>
+<body>
+<div id="demo" class="demo hidden" data-i18n="demo.banner"></div>
+<header class="top">
+  <div class="brand"><img src="/logo.svg" alt="" width="22" height="22"> ClaudePlus <span class="ver" id="ver"></span></div>
+  <nav class="tabs" role="tablist">
+    <button data-tab="overview" class="on" data-i18n="nav.overview"></button>
+    <button data-tab="sessions" data-i18n="nav.sessions"></button>
+    <button data-tab="tools" data-i18n="nav.tools"></button>
+    <button data-tab="leaks" data-i18n="nav.leaks"></button>
+    <button data-tab="agents" data-i18n="nav.agents"></button>
+    <button data-tab="settings" data-i18n="nav.settings"></button>
+  </nav>
+  <div class="controls">
+    <span class="live" id="live"><i></i><span data-i18n="live"></span></span>
+    <select id="range" aria-label="Range">
+      <option value="today" data-i18n="range.today"></option>
+      <option value="7d" data-i18n="range.7d"></option>
+      <option value="30d" data-i18n="range.30d" selected></option>
+      <option value="month" data-i18n="range.month"></option>
+      <option value="90d" data-i18n="range.90d"></option>
+      <option value="all" data-i18n="range.all"></option>
+    </select>
+    <select id="project" aria-label="Project"><option value="" data-i18n="proj.all"></option></select>
+    <select id="lang" aria-label="Language" class="langsel"></select>
+    <button id="refresh" class="icon" title="Refresh">↻</button>
+    <button id="theme" class="icon" title="Theme">◐</button>
+  </div>
+</header>
+
+<main>
+  <!-- OVERVIEW -->
+  <section id="tab-overview" class="tab on">
+    <div class="tiles">
+      <div class="tile hero"><div class="lbl" data-i18n="tile.period"></div><div class="val" id="t-total">—</div><div class="sub" id="t-total-sub"></div></div>
+      <div class="tile"><div class="lbl" data-i18n="tile.today"></div><div class="val" id="t-today">—</div><div class="sub" id="t-today-sub"></div><div class="meter hidden" id="t-today-meter"><i></i></div></div>
+      <div class="tile"><div class="lbl" data-i18n="tile.month"></div><div class="val" id="t-month">—</div><div class="sub" id="t-month-sub"></div></div>
+      <div class="tile"><div class="lbl" data-i18n="tile.burn"></div><div class="val" id="t-burn">—</div><div class="sub" data-i18n="sub.burn"></div></div>
+      <div class="tile"><div class="lbl" data-i18n="tile.block"></div><div class="val" id="t-block">—</div><div class="sub" id="t-block-sub"></div><div class="meter" id="t-block-meter"><i></i></div></div>
+      <div class="tile"><div class="lbl" data-i18n="tile.perPrompt"></div><div class="val" id="t-prompt">—</div><div class="sub" id="t-prompt-sub"></div></div>
+      <div class="tile warn"><div class="lbl" data-i18n="tile.savable"></div><div class="val" id="t-waste">—</div><div class="sub" id="t-waste-sub"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h2 data-i18n="card.daily"></h2><div class="legend" id="daily-legend"></div></div>
+      <div id="daily" class="chart"></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card"><div class="card-h"><h2 data-i18n="card.split"></h2></div><div id="split"></div></div>
+      <div class="card"><div class="card-h"><h2 data-i18n="card.models"></h2></div><div id="models"></div></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card"><div class="card-h"><h2 data-i18n="card.projects"></h2></div><div id="projects"></div></div>
+      <div class="card"><div class="card-h"><h2 data-i18n="card.heat"></h2><span class="muted small" data-i18n="card.heatHint"></span></div><div id="heat"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h2 data-i18n="card.blocks"></h2><span class="muted small" data-i18n="card.blocksHint"></span></div>
+      <div id="blocks" class="chart"></div>
+    </div>
+  </section>
+
+  <!-- SESSIONS -->
+  <section id="tab-sessions" class="tab">
+    <div class="card hidden" id="s-detail"></div>
+    <div class="card">
+      <div class="card-h"><h2 data-i18n="card.sessions"></h2><input id="s-search" data-i18n-ph="search" aria-label="Search"></div>
+      <div id="sessions" class="tablewrap"></div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section id="tab-tools" class="tab">
+    <div class="card">
+      <div class="card-h"><h2 data-i18n="card.tools"></h2><span class="muted small" data-i18n="card.toolsHint"></span></div>
+      <div id="tools" class="tablewrap"></div>
+    </div>
+    <div class="card">
+      <div class="card-h"><h2 data-i18n="card.spawned"></h2><span class="muted small" id="side-total"></span></div>
+      <div id="spawned"></div>
+    </div>
+  </section>
+
+  <!-- LEAKS -->
+  <section id="tab-leaks" class="tab">
+    <div class="tiles">
+      <div class="tile hero"><div class="lbl" data-i18n="w.score"></div><div class="val" id="w-score">—</div><div class="sub" data-i18n="w.of100"></div><div class="meter" id="w-score-meter"><i></i></div></div>
+      <div class="tile warn"><div class="lbl" data-i18n="w.save"></div><div class="val" id="w-save">—</div><div class="sub" id="w-pct"></div></div>
+      <div class="tile"><div class="lbl" data-i18n="w.guard"></div><div class="val" id="w-guard">—</div><div class="sub" data-i18n="w.guardSub"></div></div>
+    </div>
+    <div id="findings"></div>
+    <div class="card">
+      <div class="card-h"><h2 data-i18n="card.guardLog"></h2><span class="muted small" data-i18n="card.guardLogHint"></span></div>
+      <div id="guardlog" class="tablewrap"></div>
+    </div>
+  </section>
+
+  <!-- AGENTS -->
+  <section id="tab-agents" class="tab">
+    <div class="card">
+      <div class="card-h"><h2 data-i18n="ag.packs"></h2></div>
+      <div id="packs" class="packs"></div>
+    </div>
+    <div class="grid-agents">
+      <div class="card">
+        <div class="card-h"><h2 data-i18n="card.agents"></h2><button id="a-new" class="btn" data-i18n="ag.new"></button></div>
+        <div id="agents"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><h2 data-i18n="card.library"></h2><span class="muted small" id="lib-count"></span></div>
+        <div id="lib-cats" class="chips"></div>
+        <div id="library"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="tab-settings" class="tab">
+    <div class="grid2">
+      <div class="card"><div class="card-h"><h2 data-i18n="card.integration"></h2></div><div id="integration"></div></div>
+      <div class="card">
+        <div class="card-h"><h2 data-i18n="card.general"></h2></div>
+        <form id="general" class="form">
+          <label><span data-i18n="set.lang"></span> <select name="lang"></select></label>
+          <label><span data-i18n="set.slTheme"></span> <select name="theme"></select></label>
+          <pre class="slpreview" id="slpreview"></pre>
+          <button class="btn" data-i18n="save"></button>
+        </form>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-h"><h2 data-i18n="card.budget"></h2></div>
+        <form id="budget" class="form">
+          <label><span data-i18n="b.daily"></span> <input name="daily" type="number" min="0" step="1"></label>
+          <label><span data-i18n="b.monthly"></span> <input name="monthly" type="number" min="0" step="1"></label>
+          <label class="check"><input name="budgetStop" type="checkbox"> <span data-i18n="b.stop"></span></label>
+          <button class="btn" data-i18n="save"></button>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-h"><h2 data-i18n="card.guard"></h2></div>
+        <form id="guard" class="form">
+          <label><span data-i18n="g.mode"></span>
+            <select name="mode">
+              <option value="block" data-i18n="g.block"></option>
+              <option value="warn" data-i18n="g.warn"></option>
+              <option value="off" data-i18n="g.off"></option>
+            </select>
+          </label>
+          <label class="check"><input name="dedupeReads" type="checkbox"> <span data-i18n="g.dedupe"></span></label>
+          <label class="check"><input name="noisyBash" type="checkbox"> <span data-i18n="g.noisy"></span></label>
+          <label><span data-i18n="g.maxKb"></span> <input name="maxReadKb" type="number" min="10" step="10"></label>
+          <button class="btn" data-i18n="save"></button>
+        </form>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><h2 data-i18n="card.prices"></h2><span class="muted small" data-i18n="card.pricesHint"></span></div>
+      <div id="prices" class="tablewrap"></div>
+    </div>
+  </section>
+</main>
+
+<dialog id="editor">
+  <form method="dialog" class="editor">
+    <div class="card-h"><h2 id="ed-title"></h2><button value="cancel" class="icon" aria-label="Close">✕</button></div>
+    <div class="ed-row">
+      <label><span data-i18n="ed.file"></span> <input id="ed-id" required pattern="[A-Za-z0-9][A-Za-z0-9._-]*"></label>
+      <label><span data-i18n="ed.where"></span> <select id="ed-scope"><option value="user">user (~/.claude/agents)</option><option value="project">project (./.claude/agents)</option></select></label>
+      <label><span data-i18n="ed.model"></span> <select id="ed-model"></select></label>
+    </div>
+    <textarea id="ed-content" spellcheck="false"></textarea>
+    <div class="ed-foot"><span class="muted small" data-i18n="ed.hint"></span><span class="grow"></span><button value="cancel" class="btn ghost" data-i18n="ed.cancel"></button><button id="ed-save" value="default" class="btn" data-i18n="ed.save"></button></div>
+  </form>
+</dialog>
+
+<div id="tip" class="tip" role="tooltip"></div>
+<div id="toast" class="toast"></div>
+<script src="app.js" type="module"></script>
+</body>
+</html>

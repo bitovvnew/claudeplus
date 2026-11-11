@@ -1,0 +1,34 @@
+/* 0.1.0 additions: demo banner, live dot, meters, packs, chips, statusline preview */
+.brand { display: flex; align-items: center; gap: 8px; }
+.brand img { display: block; }
+.ver { font-size: 11px; font-weight: 500; color: var(--muted); border: 1px solid var(--border); padding: 1px 6px; border-radius: 99px; }
+.demo { background: linear-gradient(90deg, var(--s7), var(--s1)); color: #fff; text-align: center; padding: 6px 16px; font-size: 13px; font-weight: 600; }
+.live { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-2); white-space: nowrap; }
+.live i { width: 8px; height: 8px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 0 color-mix(in srgb, var(--good) 60%, transparent); animation: pulse 2s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--good) 55%, transparent); } 70% { box-shadow: 0 0 0 7px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+@media (prefers-reduced-motion: reduce) { .live i { animation: none; } .tab.on { animation: none; } }
+.langsel { max-width: 140px; }
+
+.meter { height: 6px; border-radius: 3px; background: var(--surface-2); margin-top: 10px; overflow: hidden; }
+.meter i { display: block; height: 100%; width: 0; border-radius: 3px; background: var(--s3); transition: width .4s ease; }
+.meter.warn i { background: var(--warning); }
+.meter.bad i { background: var(--critical); }
+
+.tile.hero { background: linear-gradient(135deg, color-mix(in srgb, var(--s7) 14%, var(--surface)), var(--surface) 70%); }
+
+.packs { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.pack { border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; display: grid; gap: 6px; background: var(--surface); }
+.pack b { font-size: 14px; }
+.pack p { margin: 0; color: var(--ink-2); font-size: 12px; line-height: 1.4; }
+.pack .row2 { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+.pack .row2 .grow { flex: 1; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.chip { border: 1px solid var(--border); background: var(--surface); border-radius: 99px; padding: 3px 10px; font-size: 12px; cursor: pointer; color: var(--ink-2); }
+.chip.on { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+.cat { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 14px 0 0; }
+
+.slpreview { margin: 0; padding: 10px 12px; border-radius: 10px; background: #0d0d0d; color: #f0efec; font: 12px/1.6 ui-monospace, "Cascadia Code", Consolas, monospace; overflow-x: auto; white-space: pre; }
+.slpreview span { white-space: pre; }
+
+.bars-h { display: grid; gap: 6px; }

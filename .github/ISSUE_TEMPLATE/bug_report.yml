@@ -1,0 +1,24 @@
+name: Bug report
+description: Something is wrong or numbers look off
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Thanks! Please **don't paste transcripts** — they can contain code and secrets. `cplus doctor` output is enough in most cases."
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you run, what did you expect, what did you get?
+    validations:
+      required: true
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Output of `cplus doctor`
+      render: text
+  - type: input
+    id: env
+    attributes:
+      label: OS / Node / Claude Code version
+      placeholder: "Windows 11 · Node 22.11 · Claude Code 2.1.x"

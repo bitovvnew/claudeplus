@@ -1,0 +1,14 @@
+name: Feature / agent / translation request
+description: Ideas for new leak detectors, agents, statusline themes or languages
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What should ClaudePlus do?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why? What does it save or unlock?

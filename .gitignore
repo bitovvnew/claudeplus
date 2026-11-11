@@ -1,0 +1,8 @@
+node_modules/
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+claudeplus-export.json
+claudeplus-sessions.csv
+.claude/settings.local.json

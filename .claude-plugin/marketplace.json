@@ -1,0 +1,11 @@
+{
+  "name": "claudeplus",
+  "owner": { "name": "ClaudePlus contributors" },
+  "plugins": [
+    {
+      "name": "claudeplus",
+      "source": "./plugin",
+      "description": "Spend tracking slash commands for Claude Code (needs the cplus CLI)."
+    }
+  ]
+}

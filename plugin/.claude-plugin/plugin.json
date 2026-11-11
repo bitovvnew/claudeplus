@@ -1,0 +1,8 @@
+{
+  "name": "claudeplus",
+  "version": "0.1.0",
+  "description": "Slash commands for ClaudePlus: /claudeplus:cost, /claudeplus:leaks, /claudeplus:session-cost. Requires the `cplus` CLI (npm i -g claudeplus or npm link).",
+  "author": { "name": "ClaudePlus contributors" },
+  "license": "MIT",
+  "keywords": ["cost", "tokens", "usage", "budget"]
+}

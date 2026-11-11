@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="ClaudePlus">
+  <defs>
+    <linearGradient id="cp-g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a497ff"/>
+      <stop offset="0.55" stop-color="#6a55f0"/>
+      <stop offset="1" stop-color="#3f2bc4"/>
+    </linearGradient>
+    <linearGradient id="cp-s" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".35"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="21" y="21" width="86" height="86" rx="22" transform="rotate(45 64 64)" fill="url(#cp-g)"/>
+  <rect x="21" y="21" width="86" height="86" rx="22" transform="rotate(45 64 64)" fill="url(#cp-s)"/>
+  <path d="M64 41v46M41 64h46" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+</svg>
