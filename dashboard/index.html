@@ -11,7 +11,7 @@
 <body>
 <div id="demo" class="demo hidden" data-i18n="demo.banner"></div>
 <header class="top">
-  <div class="brand"><img src="/logo.svg" alt="" width="22" height="22"> ClaudePlus <span class="ver" id="ver"></span></div>
+  <div class="brand"><img src="/logo.svg" alt="" width="26" height="26"> ClaudePlus <span class="ver" id="ver"></span></div>
   <nav class="tabs" role="tablist">
     <button data-tab="overview" class="on" data-i18n="nav.overview"></button>
     <button data-tab="sessions" data-i18n="nav.sessions"></button>
@@ -22,6 +22,7 @@
   </nav>
   <div class="controls">
     <span class="live" id="live"><i></i><span data-i18n="live"></span></span>
+    <button class="cmdk-btn" id="cmdk-open" data-i18n-title="cmd.title" data-i18n-label="cmd.title"><span>⌘K</span></button>
     <select id="range" aria-label="Range">
       <option value="today" data-i18n="range.today"></option>
       <option value="7d" data-i18n="range.7d"></option>
@@ -123,6 +124,10 @@
         <div id="library"></div>
       </div>
     </div>
+    <div class="card">
+      <div class="card-h"><h2 data-i18n="card.skills"></h2><span class="muted small" data-i18n="card.skillsHint"></span></div>
+      <div id="skills" class="packs"></div>
+    </div>
   </section>
 
   <!-- SETTINGS -->
@@ -186,8 +191,15 @@
   </form>
 </dialog>
 
+<dialog id="cmdk" class="cmdk" data-i18n-label="cmd.title">
+  <div class="cmdk-box">
+    <input id="cmdk-q" role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls="cmdk-list" data-i18n-label="cmd.title" data-i18n-ph="cmd.placeholder" autocomplete="off" spellcheck="false" autofocus>
+    <div id="cmdk-list" class="cmdk-list" role="listbox" data-i18n-label="cmd.title"></div>
+    <div class="cmdk-foot"><span><span class="kbd">↑↓</span> <span data-i18n="cmd.navigate"></span></span><span><span class="kbd">↵</span> <span data-i18n="cmd.run"></span></span><button type="button" id="cmdk-close" class="cmdk-close"><span class="kbd">esc</span> <span data-i18n="cmd.close"></span></button></div>
+  </div>
+</dialog>
 <div id="tip" class="tip" role="tooltip"></div>
-<div id="toast" class="toast"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script src="app.js" type="module"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
   "name": "claudeplus",
-  "version": "0.1.0",
-  "description": "The open-source power-up layer for Claude Code: local cost tracking, leak detection, token-saving Guard hook, live dashboard, statusline themes and a 62-agent library. Zero dependencies, 16 languages.",
+  "version": "0.1.1",
+  "description": "A local companion for Claude Code: cost tracking, leak detection, Guard hook, live dashboard, 94 agents and 18 skills. Zero dependencies, 17 languages.",
   "type": "module",
   "bin": {
     "cplus": "bin/cplus.js",
@@ -14,6 +14,7 @@
     "locales",
     "library",
     "assets/logo.svg",
+    "auto-connect.bat",
     "plugin",
     "README.md",
     "LICENSE",
@@ -25,7 +26,7 @@
     "test": "node scripts/test.mjs",
     "bench": "node scripts/bench.mjs",
     "screenshots": "node scripts/screenshots.mjs",
-    "library": "node scripts/build-library.mjs && node scripts/agents-doc.mjs"
+    "library": "node scripts/build-library.mjs && node scripts/build-skills.mjs && node scripts/agents-doc.mjs"
   },
   "engines": {
     "node": ">=18"

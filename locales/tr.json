@@ -27,5 +27,20 @@
   "leak.premium-subagents.title": "Pahalı modellerde çalışan alt ajanlar", "leak.premium-subagents.detail": "Alt ajanlar Opus/Fable üzerinde {cost} harcadı. Sonnet 5.5 ile {savings} daha az tutardı.", "leak.premium-subagents.advice": "Arama/okuma ajanlarına `model: sonnet` veya `model: haiku` verin (cplus agents model <name> haiku ya da Ajanlar sekmesi).",
   "leak.duplicate-reads.title": "Aynı dosya tekrar tekrar okunuyor", "leak.duplicate-reads.detail": "Değişmemiş dosyaların {count} fazladan tam okuması (~{tokens} token bağlama).", "leak.duplicate-reads.advice": "ClaudePlus Guard'ı açın (cplus install --guard): Claude'a dosyanın değişmediğini söyler.",
   "leak.big-outputs.title": "Devasa araç çıktıları", "leak.big-outputs.detail": "25k karakteri aşan {count} araç sonucu (~{tokens} token).", "leak.big-outputs.advice": "Dosyaları parça parça okuyun (offset/limit), çıktıyı sınırlayın (| head, --quiet), cat yerine Grep ile arayın.",
-  "leak.thinking.title": "Çıktıda düşünme payı", "leak.thinking.detail": "Çıktı tokenlarının {pct}'i düşünme. Zor işlerde normaldir.", "leak.thinking.advice": "Rutin işlerde effort'u düşürün: /effort low veya medium."
+  "leak.thinking.title": "Çıktıda düşünme payı", "leak.thinking.detail": "Çıktı tokenlarının {pct}'i düşünme. Zor işlerde normaldir.", "leak.thinking.advice": "Rutin işlerde effort'u düşürün: /effort low veya medium.",
+  "card.skills": "Beceriler",
+  "card.skillsHint": "Claude'un izlediği yöntemler: token diyeti, spesifikasyonlar, insan işi UI…",
+  "cmd.title": "Komut paleti",
+  "cmd.placeholder": "Bir komut yazın veya oturum arayın…",
+  "cmd.goTo": "Git",
+  "cmd.range": "Dönem",
+  "cmd.actions": "İşlemler",
+  "cmd.refresh": "Verileri yenile",
+  "cmd.theme": "Temayı değiştir",
+  "cmd.export": "CSV dışa aktarma komutunu kopyala",
+  "cmd.copied": "Kopyalandı: cplus export",
+  "cmd.copyFailed": "Kopyalanamadı. Terminalinizde cplus export komutunu çalıştırın.",
+  "cmd.navigate": "gezin",
+  "cmd.run": "çalıştır",
+  "cmd.close": "kapat"
 }

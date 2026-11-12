@@ -27,5 +27,20 @@
   "leak.premium-subagents.title": "高価なモデルで動くサブエージェント", "leak.premium-subagents.detail": "サブエージェントが Opus/Fable で {cost} を消費。Sonnet 5.5 なら {savings} 安く済みました。", "leak.premium-subagents.advice": "検索・読み込み用エージェントに `model: sonnet` か `model: haiku` を（cplus agents model <name> haiku またはエージェントタブ）。",
   "leak.duplicate-reads.title": "同じファイルを何度も読み込み", "leak.duplicate-reads.detail": "変更のないファイルの余分な全文読み込みが {count} 回（約 {tokens} トークン）。", "leak.duplicate-reads.advice": "ClaudePlus Guard を有効化（cplus install --guard）: ファイルが変わっていないことを Claude に伝えます。",
   "leak.big-outputs.title": "巨大なツール出力", "leak.big-outputs.detail": "25k 文字を超えるツール結果が {count} 件（約 {tokens} トークン）。", "leak.big-outputs.advice": "ファイルは分割して読む（offset/limit）、出力を絞る（| head, --quiet）、cat ではなく Grep で検索。",
-  "leak.thinking.title": "出力に占める思考の割合", "leak.thinking.detail": "出力トークンの {pct} が思考です。難しいタスクでは普通です。", "leak.thinking.advice": "定型作業では effort を下げましょう: /effort low または medium。"
+  "leak.thinking.title": "出力に占める思考の割合", "leak.thinking.detail": "出力トークンの {pct} が思考です。難しいタスクでは普通です。", "leak.thinking.advice": "定型作業では effort を下げましょう: /effort low または medium。",
+  "card.skills": "スキル",
+  "card.skillsHint": "Claude が従う手順書：トークン節約、仕様駆動、人間品質の UI…",
+  "cmd.title": "コマンドパレット",
+  "cmd.placeholder": "コマンドを入力、またはセッションを検索…",
+  "cmd.goTo": "移動",
+  "cmd.range": "期間",
+  "cmd.actions": "操作",
+  "cmd.refresh": "データを更新",
+  "cmd.theme": "テーマを切り替え",
+  "cmd.export": "CSVエクスポートコマンドをコピー",
+  "cmd.copied": "コピーしました: cplus export",
+  "cmd.copyFailed": "コピーできませんでした。ターミナルで cplus export を実行してください。",
+  "cmd.navigate": "移動",
+  "cmd.run": "実行",
+  "cmd.close": "閉じる"
 }

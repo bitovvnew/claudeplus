@@ -27,5 +27,20 @@
   "leak.premium-subagents.title": "Субагенти на дорогих моделях", "leak.premium-subagents.detail": "Субагенти витратили {cost} на Opus/Fable. На Sonnet 5.5 це коштувало б на {savings} менше.", "leak.premium-subagents.advice": "Дайте агентам пошуку й читання `model: sonnet` або `model: haiku` (cplus agents model <name> haiku або вкладка «Агенти»).",
   "leak.duplicate-reads.title": "Той самий файл читається знову і знову", "leak.duplicate-reads.detail": "{count} зайвих повних читань незмінених файлів (~{tokens} токенів у контекст).", "leak.duplicate-reads.advice": "Увімкніть ClaudePlus Guard (cplus install --guard): він підкаже Claude, що файл не змінювався.",
   "leak.big-outputs.title": "Гігантські виводи інструментів", "leak.big-outputs.detail": "{count} результатів понад 25k символів (~{tokens} токенів).", "leak.big-outputs.advice": "Читайте файли частинами (offset/limit), обмежуйте вивід (| head, --quiet), шукайте через Grep замість cat.",
-  "leak.thinking.title": "Частка «роздумів» у вихідних токенах", "leak.thinking.detail": "{pct} вихідних токенів — thinking. Для складних задач це нормально.", "leak.thinking.advice": "Для рутини знижуйте effort: /effort low або medium."
+  "leak.thinking.title": "Частка «роздумів» у вихідних токенах", "leak.thinking.detail": "{pct} вихідних токенів — thinking. Для складних задач це нормально.", "leak.thinking.advice": "Для рутини знижуйте effort: /effort low або medium.",
+  "card.skills": "Скіли",
+  "card.skillsHint": "методики, за якими працює Claude: економія токенів, специфікації, дизайн рівня студії…",
+  "cmd.title": "Палітра команд",
+  "cmd.placeholder": "Введіть команду або знайдіть сесію…",
+  "cmd.goTo": "Перейти",
+  "cmd.range": "Період",
+  "cmd.actions": "Дії",
+  "cmd.refresh": "Оновити дані",
+  "cmd.theme": "Перемкнути тему",
+  "cmd.export": "Скопіювати команду експорту CSV",
+  "cmd.copied": "Скопійовано: cplus export",
+  "cmd.copyFailed": "Не вдалося скопіювати. Виконайте cplus export у терміналі.",
+  "cmd.navigate": "навігація",
+  "cmd.run": "виконати",
+  "cmd.close": "закрити"
 }

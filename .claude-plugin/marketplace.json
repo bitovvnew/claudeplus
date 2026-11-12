@@ -5,7 +5,7 @@
     {
       "name": "claudeplus",
       "source": "./plugin",
-      "description": "Spend tracking slash commands for Claude Code (needs the cplus CLI)."
+      "description": "Cost tracking, optimization and spec-driven workflow commands for Claude Code (cost commands need the cplus CLI)."
     }
   ]
 }

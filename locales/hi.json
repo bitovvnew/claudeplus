@@ -27,5 +27,20 @@
   "leak.premium-subagents.title": "महँगे मॉडल पर चल रहे सबएजेंट", "leak.premium-subagents.detail": "सबएजेंट ने Opus/Fable पर {cost} ख़र्च किए। Sonnet 5.5 पर यह {savings} कम होता।", "leak.premium-subagents.advice": "खोज/पढ़ने वाले एजेंट को `model: sonnet` या `model: haiku` दें (cplus agents model <name> haiku या एजेंट टैब)।",
   "leak.duplicate-reads.title": "एक ही फ़ाइल बार-बार पढ़ी गई", "leak.duplicate-reads.detail": "बिना बदली फ़ाइलों को {count} बार फ़ालतू पूरा पढ़ा गया (~{tokens} टोकन संदर्भ में)।", "leak.duplicate-reads.advice": "ClaudePlus Guard चालू करें (cplus install --guard): यह Claude को बताता है कि फ़ाइल नहीं बदली।",
   "leak.big-outputs.title": "विशाल टूल आउटपुट", "leak.big-outputs.detail": "25k अक्षरों से बड़े {count} टूल परिणाम (~{tokens} टोकन)।", "leak.big-outputs.advice": "फ़ाइलें टुकड़ों में पढ़ें (offset/limit), आउटपुट सीमित करें (| head, --quiet), cat की जगह Grep से खोजें।",
-  "leak.thinking.title": "आउटपुट में सोच का हिस्सा", "leak.thinking.detail": "आउटपुट टोकन का {pct} सोच है। कठिन कामों में यह सामान्य है।", "leak.thinking.advice": "रोज़मर्रा के कामों के लिए effort घटाएँ: /effort low या medium।"
+  "leak.thinking.title": "आउटपुट में सोच का हिस्सा", "leak.thinking.detail": "आउटपुट टोकन का {pct} सोच है। कठिन कामों में यह सामान्य है।", "leak.thinking.advice": "रोज़मर्रा के कामों के लिए effort घटाएँ: /effort low या medium।",
+  "card.skills": "स्किल्स",
+  "card.skillsHint": "वे तरीके जिन पर Claude चलता है: टोकन बचत, स्पेक, डिज़ाइनर-स्तर UI…",
+  "cmd.title": "कमांड पैलेट",
+  "cmd.placeholder": "कमांड लिखें या सत्र खोजें…",
+  "cmd.goTo": "यहाँ जाएँ",
+  "cmd.range": "अवधि",
+  "cmd.actions": "कार्रवाइयाँ",
+  "cmd.refresh": "डेटा रीफ़्रेश करें",
+  "cmd.theme": "थीम बदलें",
+  "cmd.export": "CSV निर्यात कमांड कॉपी करें",
+  "cmd.copied": "कॉपी किया गया: cplus export",
+  "cmd.copyFailed": "कॉपी नहीं हो सका। अपने टर्मिनल में cplus export चलाएँ।",
+  "cmd.navigate": "नेविगेट करें",
+  "cmd.run": "चलाएँ",
+  "cmd.close": "बंद करें"
 }

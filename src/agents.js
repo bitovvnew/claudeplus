@@ -3,7 +3,7 @@
 // sibling "agents.disabled" folder, which Claude Code never reads — fully reversible.
 import fs from 'node:fs';
 import path from 'node:path';
-import { USER_AGENTS_DIR, projectAgentsDir, disabledDirFor, LIBRARY_DIR, TRASH_DIR, ensureDir } from './paths.js';
+import { USER_AGENTS_DIR, projectAgentsDir, disabledDirFor, LIBRARY_DIR, ensureDir, moveToTrash } from './paths.js';
 
 const NAME_RE = /^[a-z0-9][a-z0-9._-]{0,63}$/i;
 export const MODELS = ['inherit', 'haiku', 'sonnet', 'opus', 'fable'];
@@ -136,8 +136,7 @@ export function setModel(id, model, opts = {}) {
 
 export function removeAgent(id, opts = {}) {
   const a = findAgent(id, opts);
-  const dest = path.join(ensureDir(TRASH_DIR), `${a.scope}-${a.id}-${Date.now()}.md`);
-  fs.renameSync(a.file, dest);
+  const dest = moveToTrash(a.file, `${a.scope}-${a.id}-${Date.now()}.md`);
   return { ...a, trashed: dest };
 }
 
@@ -176,7 +175,7 @@ function libraryFiles() {
   return out;
 }
 
-const CATEGORY_ORDER = ['core', 'cost-saver', 'quality', 'frontend', 'backend', 'devops', 'data-ai', 'docs', 'mobile', 'product', 'other'];
+const CATEGORY_ORDER = ['core', 'cost-saver', 'design', 'quality', 'frontend', 'backend', 'bots-automation', 'devops', 'data-ai', 'platforms', 'docs', 'mobile', 'product', 'other'];
 
 export function libraryList() {
   const installed = new Set(listAgents().map((a) => a.id));
@@ -210,8 +209,11 @@ export function installFromLibrary(id, { scope = 'user', cwd, force = false } = 
   assertName(id);
   const src = libraryFiles().find((x) => path.basename(x.file, '.md') === id)?.file;
   if (!src) throw new Error(`No library agent "${id}". See: cplus agents library`);
-  const dest = path.join(ensureDir(dirFor(scope, true, cwd)), `${id}.md`);
+  const enabled = path.join(dirFor(scope, true, cwd), `${id}.md`);
+  const disabled = path.join(dirFor(scope, false, cwd), `${id}.md`);
+  const dest = fs.existsSync(enabled) ? enabled : fs.existsSync(disabled) ? disabled : enabled;
   if (fs.existsSync(dest) && !force) throw new Error(`${dest} exists (use --force to overwrite)`);
+  ensureDir(path.dirname(dest));
   fs.copyFileSync(src, dest);
-  return readAgent(dest, scope, true);
+  return readAgent(dest, scope, dest === enabled);
 }

@@ -27,5 +27,20 @@
   "leak.premium-subagents.title": "Subagenti su modelli premium", "leak.premium-subagents.detail": "I subagenti hanno speso {cost} su Opus/Fable. Con Sonnet 5.5 sarebbero costati {savings} in meno.", "leak.premium-subagents.advice": "Dai `model: sonnet` o `model: haiku` agli agenti di ricerca/lettura (cplus agents model <name> haiku o la scheda Agenti).",
   "leak.duplicate-reads.title": "Lo stesso file letto più volte", "leak.duplicate-reads.detail": "{count} letture complete in più di file invariati (~{tokens} token nel contesto).", "leak.duplicate-reads.advice": "Attiva ClaudePlus Guard (cplus install --guard): dice a Claude che il file non è cambiato.",
   "leak.big-outputs.title": "Output giganti degli strumenti", "leak.big-outputs.detail": "{count} risultati oltre 25k caratteri (~{tokens} token).", "leak.big-outputs.advice": "Leggi i file a pezzi (offset/limit), limita l'output (| head, --quiet), cerca con Grep invece di cat.",
-  "leak.thinking.title": "Quota di thinking nell'output", "leak.thinking.detail": "{pct} dei token di output sono thinking. Normale per compiti difficili.", "leak.thinking.advice": "Per lavori di routine abbassa l'effort: /effort low o medium."
+  "leak.thinking.title": "Quota di thinking nell'output", "leak.thinking.detail": "{pct} dei token di output sono thinking. Normale per compiti difficili.", "leak.thinking.advice": "Per lavori di routine abbassa l'effort: /effort low o medium.",
+  "card.skills": "Skill",
+  "card.skillsHint": "metodi seguiti da Claude: dieta di token, specifiche, UI da designer…",
+  "cmd.title": "Tavolozza comandi",
+  "cmd.placeholder": "Digita un comando o cerca sessioni…",
+  "cmd.goTo": "Vai a",
+  "cmd.range": "Periodo",
+  "cmd.actions": "Azioni",
+  "cmd.refresh": "Aggiorna dati",
+  "cmd.theme": "Cambia tema",
+  "cmd.export": "Copia il comando di esportazione CSV",
+  "cmd.copied": "Copiato: cplus export",
+  "cmd.copyFailed": "Impossibile copiare. Esegui cplus export nel terminale.",
+  "cmd.navigate": "naviga",
+  "cmd.run": "esegui",
+  "cmd.close": "chiudi"
 }

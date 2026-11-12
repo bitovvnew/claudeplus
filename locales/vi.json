@@ -27,5 +27,20 @@
   "leak.premium-subagents.title": "Subagent chạy trên mô hình đắt", "leak.premium-subagents.detail": "Subagent đã tiêu {cost} trên Opus/Fable. Dùng Sonnet 5.5 sẽ rẻ hơn {savings}.", "leak.premium-subagents.advice": "Đặt `model: sonnet` hoặc `model: haiku` cho agent tìm kiếm/đọc (cplus agents model <name> haiku hoặc tab Agent).",
   "leak.duplicate-reads.title": "Cùng một tệp bị đọc đi đọc lại", "leak.duplicate-reads.detail": "{count} lần đọc toàn bộ thừa các tệp chưa đổi (~{tokens} token vào ngữ cảnh).", "leak.duplicate-reads.advice": "Bật ClaudePlus Guard (cplus install --guard): nó báo cho Claude rằng tệp chưa thay đổi.",
   "leak.big-outputs.title": "Đầu ra công cụ khổng lồ", "leak.big-outputs.detail": "{count} kết quả công cụ trên 25k ký tự (~{tokens} token).", "leak.big-outputs.advice": "Đọc tệp theo từng phần (offset/limit), giới hạn đầu ra (| head, --quiet), tìm bằng Grep thay vì cat.",
-  "leak.thinking.title": "Tỉ lệ suy nghĩ trong đầu ra", "leak.thinking.detail": "{pct} token đầu ra là suy nghĩ. Bình thường với việc khó.", "leak.thinking.advice": "Với việc thường ngày hãy giảm effort: /effort low hoặc medium."
+  "leak.thinking.title": "Tỉ lệ suy nghĩ trong đầu ra", "leak.thinking.detail": "{pct} token đầu ra là suy nghĩ. Bình thường với việc khó.", "leak.thinking.advice": "Với việc thường ngày hãy giảm effort: /effort low hoặc medium.",
+  "card.skills": "Kỹ năng",
+  "card.skillsHint": "cẩm nang Claude làm theo: tiết kiệm token, đặc tả, UI chuẩn nhà thiết kế…",
+  "cmd.title": "Bảng lệnh",
+  "cmd.placeholder": "Nhập lệnh hoặc tìm phiên…",
+  "cmd.goTo": "Đi đến",
+  "cmd.range": "Khoảng thời gian",
+  "cmd.actions": "Thao tác",
+  "cmd.refresh": "Làm mới dữ liệu",
+  "cmd.theme": "Đổi giao diện",
+  "cmd.export": "Sao chép lệnh xuất CSV",
+  "cmd.copied": "Đã sao chép: cplus export",
+  "cmd.copyFailed": "Không thể sao chép. Hãy chạy cplus export trong terminal.",
+  "cmd.navigate": "di chuyển",
+  "cmd.run": "chạy",
+  "cmd.close": "đóng"
 }

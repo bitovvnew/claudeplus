@@ -79,12 +79,12 @@ function terminal(title, cmd, text, file, width = 1180) {
   const height = lines.length * 20 + 128;
   const html = `<!doctype html><meta charset="utf-8"><style>
     html,body{margin:0;background:transparent}
-    body{padding:28px;background:linear-gradient(135deg,#2a1f6b,#0e0d1a 55%,#13213d)}
-    .win{border-radius:12px;background:#121212;box-shadow:0 20px 60px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.08);overflow:hidden}
-    .bar{height:36px;display:flex;align-items:center;gap:8px;padding:0 14px;background:#1d1d1c;color:#898781;font:12px system-ui,sans-serif}
+    body{padding:28px;background:#e9e5dc}
+    .win{border-radius:12px;background:#16161a;box-shadow:0 18px 40px rgba(22,22,26,.18),0 0 0 1px rgba(22,22,26,.25);overflow:hidden}
+    .bar{height:36px;display:flex;align-items:center;gap:8px;padding:0 14px;background:#202024;color:#898781;font:12px system-ui,sans-serif}
     .bar i{width:12px;height:12px;border-radius:50%;display:inline-block}.bar span{margin-left:10px}
     pre{margin:0;padding:16px 20px 20px;color:#f0efec;font:13.5px/20px "Cascadia Mono","Cascadia Code",Consolas,"DejaVu Sans Mono",monospace;white-space:pre}
-    .ps{color:#9085e9}</style>
+    .ps{color:#1ec97e}</style>
     <div class="win"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span>${title}</span></div>
     <pre><span class="ps">❯</span> ${cmd}\n${lines.map(ansiToHtml).join('\n')}</pre></div>`;
   const f = path.join(TMP, file.replace('.png', '.html'));
@@ -105,6 +105,7 @@ terminal('cplus — live monitor', 'cplus watch', run(['watch', '--once']), 'cli
 terminal('cplus — 5-hour blocks', 'cplus blocks', run(['blocks', '-n', '8']), 'cli-blocks.png');
 terminal('cplus — statusline themes', 'cplus statusline --preview', execFileSync(process.execPath, [BIN, 'statusline', '--preview'], { env, encoding: 'utf8' }), 'cli-statusline.png', 1000);
 terminal('cplus — agent packs', 'cplus agents packs', run(['agents', 'packs']), 'cli-packs.png');
+terminal('cplus — optimize', 'cplus optimize', run(['optimize']), 'cli-optimize.png', 1000);
 
 console.log('dashboard shots…');
 const server = spawn(process.execPath, [BIN, 'demo', 'dash', '--no-open', '--port', String(PORT)], { env, stdio: ['ignore', 'pipe', 'pipe'] });
@@ -116,14 +117,14 @@ try {
   const base = `http://127.0.0.1:${PORT}/`;
   const top = await fetch(`${base}api/report?since=30d`).then((r) => r.json());
   const sid = [...top.report.sessions].sort((a, b) => b.cost - a.cost)[0].sid;
-  shot(`${base}?lang=en&theme=dark#overview`, 'dashboard-dark.png', 1440, 1420);
-  shot(`${base}?lang=en&theme=light#overview`, 'dashboard-light.png', 1440, 1420);
-  shot(`${base}?lang=en&theme=dark#leaks`, 'dashboard-leaks.png', 1440, 1500);
-  shot(`${base}?lang=en&theme=dark#sessions/${sid}`, 'dashboard-session.png', 1440, 1080);
-  shot(`${base}?lang=en&theme=dark#agents`, 'dashboard-agents.png', 1440, 1300);
-  shot(`${base}?lang=en&theme=dark#settings`, 'dashboard-settings.png', 1440, 1100);
-  shot(`${base}?lang=ja&theme=light#overview`, 'dashboard-ja.png', 1440, 900);
-  shot(`${base}?lang=en&theme=dark#overview`, 'dashboard-mobile.png', 400, 1500, 2);
+  shot(`${base}?still&lang=en&theme=dark#overview`, 'dashboard-dark.png', 1440, 1420);
+  shot(`${base}?still&lang=en&theme=light#overview`, 'dashboard-light.png', 1440, 1420);
+  shot(`${base}?still&lang=en&theme=dark#leaks`, 'dashboard-leaks.png', 1440, 1500);
+  shot(`${base}?still&lang=en&theme=dark#sessions/${sid}`, 'dashboard-session.png', 1440, 1080);
+  shot(`${base}?still&lang=en&theme=dark#agents`, 'dashboard-agents.png', 1440, 1300);
+  shot(`${base}?still&lang=en&theme=dark#settings`, 'dashboard-settings.png', 1440, 1100);
+  shot(`${base}?still&lang=ja&theme=light#overview`, 'dashboard-ja.png', 1440, 900);
+  shot(`${base}?still&lang=en&theme=dark#overview`, 'dashboard-mobile.png', 400, 1500, 2);
 } finally {
   server.kill();
 }

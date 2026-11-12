@@ -27,5 +27,20 @@
   "leak.premium-subagents.title": "Subagenci na drogich modelach", "leak.premium-subagents.detail": "Subagenci wydali {cost} na Opus/Fable. Na Sonnet 5.5 kosztowałoby to o {savings} mniej.", "leak.premium-subagents.advice": "Daj agentom wyszukującym `model: sonnet` lub `model: haiku` (cplus agents model <name> haiku lub zakładka Agenci).",
   "leak.duplicate-reads.title": "Ten sam plik czytany w kółko", "leak.duplicate-reads.detail": "{count} zbędnych pełnych odczytów niezmienionych plików (~{tokens} tokenów w kontekście).", "leak.duplicate-reads.advice": "Włącz ClaudePlus Guard (cplus install --guard): powie Claude, że plik się nie zmienił.",
   "leak.big-outputs.title": "Gigantyczne wyniki narzędzi", "leak.big-outputs.detail": "{count} wyników powyżej 25k znaków (~{tokens} tokenów).", "leak.big-outputs.advice": "Czytaj pliki fragmentami (offset/limit), ograniczaj wyjście (| head, --quiet), szukaj Grepem zamiast cat.",
-  "leak.thinking.title": "Udział thinking w wyjściu", "leak.thinking.detail": "{pct} tokenów wyjścia to thinking. Normalne przy trudnych zadaniach.", "leak.thinking.advice": "Przy rutynie obniż effort: /effort low lub medium."
+  "leak.thinking.title": "Udział thinking w wyjściu", "leak.thinking.detail": "{pct} tokenów wyjścia to thinking. Normalne przy trudnych zadaniach.", "leak.thinking.advice": "Przy rutynie obniż effort: /effort low lub medium.",
+  "card.skills": "Umiejętności",
+  "card.skillsHint": "metody, którymi kieruje się Claude: dieta tokenów, specyfikacje, UI jak od projektanta…",
+  "cmd.title": "Paleta poleceń",
+  "cmd.placeholder": "Wpisz polecenie lub wyszukaj sesje…",
+  "cmd.goTo": "Przejdź do",
+  "cmd.range": "Okres",
+  "cmd.actions": "Działania",
+  "cmd.refresh": "Odśwież dane",
+  "cmd.theme": "Zmień motyw",
+  "cmd.export": "Kopiuj polecenie eksportu CSV",
+  "cmd.copied": "Skopiowano: cplus export",
+  "cmd.copyFailed": "Nie udało się skopiować. Uruchom cplus export w terminalu.",
+  "cmd.navigate": "nawigacja",
+  "cmd.run": "uruchom",
+  "cmd.close": "zamknij"
 }

@@ -6,7 +6,7 @@ import { ROOT } from './paths.js';
 export const LOCALES_DIR = path.join(ROOT, 'locales');
 export const LANGS = {
   en: 'English', ru: 'Русский', uk: 'Українська', es: 'Español', pt: 'Português', fr: 'Français', de: 'Deutsch', it: 'Italiano',
-  pl: 'Polski', tr: 'Türkçe', zh: '中文', ja: '日本語', ko: '한국어', hi: 'हिन्दी', id: 'Bahasa Indonesia', vi: 'Tiếng Việt',
+  pl: 'Polski', tr: 'Türkçe', zh: '中文', ja: '日本語', ko: '한국어', hi: 'हिन्दी', id: 'Bahasa Indonesia', vi: 'Tiếng Việt', kk: 'Қазақша',
 };
 
 const cache = new Map();

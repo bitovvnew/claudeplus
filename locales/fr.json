@@ -27,5 +27,20 @@
   "leak.premium-subagents.title": "Sous-agents sur des modèles premium", "leak.premium-subagents.detail": "Les sous-agents ont dépensé {cost} sur Opus/Fable. Sur Sonnet 5.5, cela aurait coûté {savings} de moins.", "leak.premium-subagents.advice": "Donnez `model: sonnet` ou `model: haiku` aux agents de recherche/lecture (cplus agents model <name> haiku ou l'onglet Agents).",
   "leak.duplicate-reads.title": "Le même fichier lu encore et encore", "leak.duplicate-reads.detail": "{count} lectures complètes en trop de fichiers inchangés (~{tokens} tokens dans le contexte).", "leak.duplicate-reads.advice": "Activez ClaudePlus Guard (cplus install --guard) : il signale à Claude que le fichier n'a pas changé.",
   "leak.big-outputs.title": "Sorties d'outils géantes", "leak.big-outputs.detail": "{count} résultats de plus de 25k caractères (~{tokens} tokens).", "leak.big-outputs.advice": "Lisez les fichiers par tranches (offset/limit), limitez la sortie (| head, --quiet), cherchez avec Grep plutôt que cat.",
-  "leak.thinking.title": "Part du thinking dans la sortie", "leak.thinking.detail": "{pct} des tokens de sortie sont du thinking. Normal pour les tâches difficiles.", "leak.thinking.advice": "Pour les tâches de routine, baissez l'effort : /effort low ou medium."
+  "leak.thinking.title": "Part du thinking dans la sortie", "leak.thinking.detail": "{pct} des tokens de sortie sont du thinking. Normal pour les tâches difficiles.", "leak.thinking.advice": "Pour les tâches de routine, baissez l'effort : /effort low ou medium.",
+  "card.skills": "Skills",
+  "card.skillsHint": "méthodes suivies par Claude : régime de tokens, specs, UI de niveau humain…",
+  "cmd.title": "Palette de commandes",
+  "cmd.placeholder": "Saisir une commande ou rechercher des sessions…",
+  "cmd.goTo": "Aller à",
+  "cmd.range": "Période",
+  "cmd.actions": "Actions",
+  "cmd.refresh": "Actualiser les données",
+  "cmd.theme": "Changer de thème",
+  "cmd.export": "Copier la commande d’export CSV",
+  "cmd.copied": "Copié : cplus export",
+  "cmd.copyFailed": "Échec de la copie. Exécutez cplus export dans votre terminal.",
+  "cmd.navigate": "naviguer",
+  "cmd.run": "exécuter",
+  "cmd.close": "fermer"
 }

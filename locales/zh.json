@@ -27,5 +27,20 @@
   "leak.premium-subagents.title": "子智能体使用了高价模型", "leak.premium-subagents.detail": "子智能体在 Opus/Fable 上花费了 {cost}。换成 Sonnet 5.5 可少花 {savings}。", "leak.premium-subagents.advice": "为搜索/阅读类智能体设置 `model: sonnet` 或 `model: haiku`（cplus agents model <name> haiku，或在「智能体」标签页中）。",
   "leak.duplicate-reads.title": "同一文件被反复读取", "leak.duplicate-reads.detail": "对未修改文件多余的完整读取 {count} 次（约 {tokens} token 进入上下文）。", "leak.duplicate-reads.advice": "开启 ClaudePlus Guard（cplus install --guard）：它会告诉 Claude 文件自上次读取后未变。",
   "leak.big-outputs.title": "超大的工具输出", "leak.big-outputs.detail": "{count} 个工具结果超过 25k 字符（约 {tokens} token）。", "leak.big-outputs.advice": "分段读取文件（offset/limit），限制命令输出（| head、--quiet），用 Grep 代替 cat 搜索。",
-  "leak.thinking.title": "思考在输出中的占比", "leak.thinking.detail": "{pct} 的输出 token 是思考。对复杂任务来说很正常。", "leak.thinking.advice": "日常小改动可降低 effort：/effort low 或 medium。"
+  "leak.thinking.title": "思考在输出中的占比", "leak.thinking.detail": "{pct} 的输出 token 是思考。对复杂任务来说很正常。", "leak.thinking.advice": "日常小改动可降低 effort：/effort low 或 medium。",
+  "card.skills": "技能",
+  "card.skillsHint": "Claude 遵循的方法：省 token、规格驱动、设计师级 UI…",
+  "cmd.title": "命令面板",
+  "cmd.placeholder": "输入命令或搜索会话…",
+  "cmd.goTo": "前往",
+  "cmd.range": "时间范围",
+  "cmd.actions": "操作",
+  "cmd.refresh": "刷新数据",
+  "cmd.theme": "切换主题",
+  "cmd.export": "复制 CSV 导出命令",
+  "cmd.copied": "已复制：cplus export",
+  "cmd.copyFailed": "无法复制。请在终端中运行 cplus export。",
+  "cmd.navigate": "导航",
+  "cmd.run": "执行",
+  "cmd.close": "关闭"
 }

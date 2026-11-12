@@ -13,12 +13,15 @@ const t = (key, p = {}) => String(L[key] ?? key).replace(/\{(\w+)\}/g, (_, k) =>
 function applyI18n() {
   $$('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
   $$('[data-i18n-ph]').forEach((el) => { el.placeholder = t(el.dataset.i18nPh); });
+  $$('[data-i18n-label]').forEach((el) => { el.setAttribute('aria-label', t(el.dataset.i18nLabel)); });
+  $$('[data-i18n-title]').forEach((el) => { el.title = t(el.dataset.i18nTitle); });
   document.documentElement.lang = S.lang;
 }
 async function loadLang(lang) {
   S.lang = lang;
   L = await fetch(`/i18n/${lang}.json`).then((r) => r.json()).catch(() => ({}));
   applyI18n();
+  requestAnimationFrame(moveIndicator);
 }
 
 /* ---------- formatting ---------- */
@@ -62,6 +65,46 @@ const modelColor = (m) => {
   return `var(--s${slot})`;
 };
 const SPLIT = [['cacheRead', 'split.cacheRead', 'var(--s1)'], ['cacheWrite', 'split.cacheWrite', 'var(--s7)'], ['output', 'split.output', 'var(--s2)'], ['input', 'split.input', 'var(--s3)'], ['web', 'split.web', 'var(--s4)']];
+
+/* ---------- motion ---------- */
+const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+let reduced = motionPreference.matches || qs.has('still');
+motionPreference.addEventListener('change', (e) => { reduced = e.matches || qs.has('still'); });
+if (qs.has('still')) document.documentElement.classList.add('still');
+const ease = (t) => 1 - Math.pow(1 - t, 3);
+/** Animate a number from its previous value to `to`, formatting every frame. */
+function countUp(el, to, fmt = usd, suffix = '') {
+  if (!el) return;
+  el.classList.remove('skel');
+  const from = +el.dataset.v || 0;
+  el.dataset.v = to;
+  cancelAnimationFrame(+el.dataset.raf || 0);
+  if (reduced || !document.body.classList.contains('anim') || !isFinite(to) || from === to) { el.textContent = fmt(to) + suffix; return; }
+  const t0 = performance.now(), dur = 750;
+  const step = (now) => {
+    const k = reduced ? 1 : Math.max(0, Math.min(1, (now - t0) / dur));
+    el.textContent = fmt(from + (to - from) * ease(k)) + suffix;
+    if (k < 1) el.dataset.raf = requestAnimationFrame(step);
+  };
+  el.dataset.raf = requestAnimationFrame(step);
+}
+/** Replay entrance animations only for user-driven renders (not the silent 30s refresh). */
+function animateNext() {
+  document.body.classList.remove('anim');
+  void document.body.offsetWidth;
+  document.body.classList.add('anim');
+  clearTimeout(animateNext.t);
+  animateNext.t = setTimeout(() => document.body.classList.remove('anim'), 2200);
+}
+function stagger(section) { $$('.tile, .card', section).forEach((el, i) => el.style.setProperty('--i', Math.min(i, 12))); }
+function moveIndicator() {
+  const nav = $('.tabs'), on = $('.tabs button.on');
+  if (!nav || !on) return;
+  let ind = $('.ind', nav);
+  if (!ind) { ind = document.createElement('span'); ind.className = 'ind'; nav.prepend(ind); }
+  ind.style.width = on.offsetWidth + 'px';
+  ind.style.transform = `translateX(${on.offsetLeft}px)`;
+}
 
 /* ---------- api ---------- */
 async function api(path, opts = {}) {
@@ -118,6 +161,9 @@ function setTab(raw) {
   $$('.tabs button').forEach((b) => b.classList.toggle('on', b.dataset.tab === tab));
   $$('.tab').forEach((s) => s.classList.toggle('on', s.id === `tab-${tab}`));
   history.replaceState(null, '', location.search + '#' + raw);
+  stagger($(`#tab-${tab}`));
+  animateNext();
+  requestAnimationFrame(moveIndicator);
   if (tab === 'agents') loadAgents();
   if (tab === 'settings') loadSettings();
   if (tab === 'leaks') loadGuardLog();
@@ -127,19 +173,31 @@ $$('.tabs button').forEach((b) => (b.onclick = () => setTab(b.dataset.tab)));
 addEventListener('hashchange', () => { const h = location.hash.slice(1); if (h && h.split('/')[0] !== S.tab) setTab(h); });
 
 $('#range').value = S.range;
-$('#range').onchange = (e) => { S.range = e.target.value; sset('cp.range', S.range); load(); };
-$('#project').onchange = (e) => { S.project = e.target.value; load(); };
-$('#refresh').onclick = () => load(true);
-$('#lang').onchange = async (e) => { sset('cp.lang', e.target.value); await loadLang(e.target.value); renderAll(); if (S.tab === 'agents') loadAgents(); if (S.tab === 'leaks') loadGuardLog(); };
+$('#range').onchange = (e) => { S.range = e.target.value; sset('cp.range', S.range); load(false, true); };
+$('#project').onchange = (e) => { S.project = e.target.value; load(false, true); };
+$('#refresh').onclick = () => load(true, true);
+async function changeLanguage(lang) {
+  sset('cp.lang', lang);
+  $('#lang').value = lang;
+  await loadLang(lang);
+  renderAll();
+  if (S.tab === 'agents') await loadAgents();
+  if (S.tab === 'leaks') await loadGuardLog();
+  if (S.tab === 'settings') await loadSettings();
+  const sid = location.hash.match(/^#sessions\/(.+)$/)?.[1];
+  if (S.tab === 'sessions' && sid) await openSession(decodeURIComponent(sid));
+}
+$('#lang').onchange = (e) => changeLanguage(e.target.value);
 
 /* ---------- load ---------- */
-async function load(refresh = false) {
+async function load(refresh = false, animate = false) {
   $('#refresh').textContent = '…';
   try {
     const q = new URLSearchParams({ since: S.range });
     if (S.project) q.set('project', S.project);
     if (refresh) q.set('refresh', '1');
     S.data = await api('report?' + q);
+    if (animate) animateNext();
     renderAll();
   } catch (e) { toast(e.message, true); }
   finally { $('#refresh').textContent = '↻'; }
@@ -162,22 +220,22 @@ function renderAll() {
   if (cur && !r.projects.some((p) => p.project === cur)) sel.insertAdjacentHTML('beforeend', `<option value="${esc(cur)}">${esc(cur)}</option>`);
   sel.value = cur;
 
-  $('#t-total').textContent = usd(tt.cost);
+  countUp($('#t-total'), tt.cost);
   $('#t-total-sub').textContent = t('sub.calls', { calls: num(tt.msgs), sessions: tt.sessions });
-  $('#t-today').textContent = usd(today.cost);
+  countUp($('#t-today'), today.cost);
   $('#t-today-sub').textContent = cfg.budget.daily ? t('sub.budgetDay', { pct: pct(today.cost, cfg.budget.daily), limit: usd(cfg.budget.daily) }) : t('sub.callsOnly', { calls: num(today.msgs) });
   if (cfg.budget.daily) setMeter($('#t-today-meter'), today.cost / cfg.budget.daily); else $('#t-today-meter').classList.add('hidden');
-  $('#t-month').textContent = usd(month.cost);
+  countUp($('#t-month'), month.cost);
   $('#t-month-sub').textContent = cfg.budget.monthly ? t('sub.budgetMonth', { pct: pct(month.cost, cfg.budget.monthly), limit: usd(cfg.budget.monthly) }) : projectedMonth(month.cost);
-  $('#t-burn').textContent = usd(r.burnRate) + '/h';
+  countUp($('#t-burn'), r.burnRate, usd, '/h');
   const ab = r.activeBlock;
-  $('#t-block').textContent = ab ? usd(ab.cost) : '—';
+  if (ab) countUp($('#t-block'), ab.cost); else { $('#t-block').textContent = '—'; $('#t-block').classList.remove('skel'); }
   $('#t-block-sub').textContent = ab ? t('sub.blockLeft', { left: hm(ab.left), calls: ab.calls }) + ` · → ${usd(ab.projected)}` : t('sub.idle');
   setMeter($('#t-block-meter'), ab ? 1 - ab.left / (5 * 36e5) : 0);
   $('#t-block-meter').classList.remove('warn', 'bad');
-  $('#t-prompt').textContent = usd(tt.prompts ? tt.cost / tt.prompts : 0);
+  countUp($('#t-prompt'), tt.prompts ? tt.cost / tt.prompts : 0);
   $('#t-prompt-sub').textContent = t('sub.prompts', { count: num(tt.prompts) });
-  $('#t-waste').textContent = usd(w.savings);
+  countUp($('#t-waste'), w.savings);
   $('#t-waste-sub').textContent = t('sub.savable', { pct: Math.round(w.pct * 100) + '%' });
   $('#live').classList.toggle('hidden', !r.activeSessions?.length);
 
@@ -204,12 +262,14 @@ function renderRows(el, rows) {
   if (!rows.length) { el.innerHTML = `<div class="empty">${esc(t('empty'))}</div>`; return; }
   const max = Math.max(...rows.map((r) => r.value), 0) || 1;
   const total = rows.reduce((a, r) => a + r.value, 0);
+  const animate = !reduced && document.body.classList.contains('anim');
   el.innerHTML = `<div class="rows">${rows.map((r, i) => `
     <div class="row" data-i="${i}" ${r.onClick ? 'style="cursor:pointer"' : ''}>
       <div class="name" title="${esc(r.name)}">${esc(r.name)}</div>
-      <div class="track"><div class="fill" style="width:${(r.value / max) * 100}%;background:${r.color}"></div></div>
+      <div class="track"><div class="fill" data-w="${(r.value / max) * 100}" style="width:${animate ? 0 : (r.value / max) * 100}%;background:${r.color};--d:${Math.min(i, 14) * 35}ms"></div></div>
       <div class="v">${r.label ?? usd(r.value)}${r.label ? '' : `<small>${pct(r.value, total)}</small>`}</div>
     </div>`).join('')}</div>`;
+  if (animate) requestAnimationFrame(() => requestAnimationFrame(() => $$('.fill', el).forEach((f) => { f.style.width = f.dataset.w + '%'; })));
   $$('.row', el).forEach((row) => {
     const r = rows[+row.dataset.i];
     row.onmousemove = (e) => r.tip && showTip(r.tip, e);
@@ -248,7 +308,7 @@ function barChart(el, items, { height = 240, valueFmt = tickUsd, aria = '' } = {
       const h = y0 - y1;
       if (h > 0.3) {
         const rr = j === segs.length - 1 ? Math.min(4, barW / 2, h) : 0;
-        svg += `<path d="M${x},${y0} V${y1 + rr} q0,-${rr} ${rr},-${rr} H${x + barW - rr} q${rr},0 ${rr},${rr} V${y0} Z" fill="${z.color}"/>`;
+        svg += `<path class="bar" data-i="${i}" style="--d:${Math.min(i * 18, 700)}ms" d="M${x},${y0} V${y1 + rr} q0,-${rr} ${rr},-${rr} H${x + barW - rr} q${rr},0 ${rr},${rr} V${y0} Z" fill="${z.color}"/>`;
       }
       acc += z.v;
     });
@@ -263,9 +323,10 @@ function barChart(el, items, { height = 240, valueFmt = tickUsd, aria = '' } = {
     h.onmousemove = (e) => {
       const cx = +h.getAttribute('x') + bw / 2;
       cross.setAttribute('x1', cx); cross.setAttribute('x2', cx); cross.setAttribute('visibility', 'visible');
+      $$('path.bar', el).forEach((p) => p.classList.toggle('hot', p.dataset.i === h.dataset.i));
       showTip(items[+h.dataset.i].tip, e);
     };
-    h.onmouseleave = () => { hideTip(); cross.setAttribute('visibility', 'hidden'); };
+    h.onmouseleave = () => { hideTip(); cross.setAttribute('visibility', 'hidden'); $$('path.bar.hot', el).forEach((p) => p.classList.remove('hot')); };
   });
 }
 
@@ -333,7 +394,7 @@ function renderHeat(heat) {
   for (let i = 0; i < 24; i++) h += `<span class="h">${i % 3 === 0 ? i : ''}</span>`;
   heat.forEach((row, d) => {
     h += `<span>${esc(days[d] || '')}</span>`;
-    row.forEach((v, hr) => { h += `<div class="c" data-d="${d}" data-h="${hr}" style="background:var(--seq-${step(v)})"></div>`; });
+    row.forEach((v, hr) => { h += `<div class="c" data-d="${d}" data-h="${hr}" style="background:var(--seq-${step(v)});--d:${(d + hr) * 22}ms"></div>`; });
   });
   $('#heat').innerHTML = h + '</div>';
   $$('.heat .c').forEach((c) => {
@@ -398,7 +459,7 @@ async function openSession(sid) {
     renderRows($('#s-tools'), d.report.tools.filter((x) => x.calls).slice(0, 10).map((x) => ({ name: shortTool(x.tool), value: x.cost, color: 'var(--s2)', tip: `<b>${esc(x.tool)}</b><br>${t('tt.calls', { n: x.calls })} · ${usd(x.cost)}<br>${t('th.outCtx')} ≈ ${num(x.resultTokens)}` })));
     const leaks = d.waste.findings.filter((f) => f.savings > 0.001);
     $('#s-leaks').innerHTML = leaks.length ? leaks.map((f) => `<div class="row" style="grid-template-columns:1fr auto"><div class="name">${esc(t(`leak.${f.id}.title`, f.params))}</div><div class="v">${usd(f.savings)}</div></div>`).join('') : `<div class="muted small">${t('sess.clean')}</div>`;
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
   } catch (e) { el.innerHTML = `<div class="empty">${esc(e.message)}</div>`; }
 }
 
@@ -415,8 +476,8 @@ function renderTimeline(el, points) {
   el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" height="${H}">
     <g class="axis">${ticks.map((v) => `<line class="gridline" x1="${Lp}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/><text x="${Lp - 8}" y="${y(v) + 4}" text-anchor="end">${num(v)}</text>`).join('')}</g>
     ${max >= 200000 ? `<line x1="${Lp}" x2="${W - R}" y1="${y(200000)}" y2="${y(200000)}" stroke="var(--serious)" stroke-dasharray="4 4"/><text x="${W - R}" y="${y(200000) - 4}" text-anchor="end" font-size="10" fill="var(--ink-2)">200k</text>` : ''}
-    <path d="${d}L${x(pts.length - 1)},${T + ih}L${Lp},${T + ih}Z" fill="var(--s1)" opacity=".12"/>
-    <path d="${d}" fill="none" stroke="var(--s1)" stroke-width="2" stroke-linejoin="round"/>
+    <path class="area" d="${d}L${x(pts.length - 1)},${T + ih}L${Lp},${T + ih}Z" fill="var(--s1)" opacity=".12"/>
+    <path class="line" pathLength="1" d="${d}" fill="none" stroke="var(--s1)" stroke-width="2" stroke-linejoin="round"/>
     <line class="baseline" x1="${Lp}" x2="${W - R}" y1="${T + ih}" y2="${T + ih}"/>
     <circle class="dot" r="4" fill="var(--s1)" stroke="var(--surface)" stroke-width="2" visibility="hidden"/>
     <rect class="hit" x="${Lp}" y="${T}" width="${iw}" height="${ih}" fill="transparent"/>
@@ -448,11 +509,11 @@ function renderTools(r) {
 const SEV = { high: 'var(--critical)', medium: 'var(--serious)', low: 'var(--warning)', info: 'var(--muted)' };
 const codeify = (s) => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/(\/compact|\/clear|\/effort \w+|cplus [\w -]+?(?=[).,:]|$))/g, '<code>$1</code>');
 function renderWaste(w) {
-  $('#w-score').textContent = w.score;
+  countUp($('#w-score'), w.score, (n) => String(Math.round(n)));
   setMeter($('#w-score-meter'), w.score / 100);
   $('#w-score-meter').classList.remove('warn', 'bad');
   if (w.score < 60) $('#w-score-meter').classList.add('bad'); else if (w.score < 80) $('#w-score-meter').classList.add('warn');
-  $('#w-save').textContent = usd(w.savings);
+  countUp($('#w-save'), w.savings);
   $('#w-pct').textContent = t('w.pctOf', { pct: Math.round(w.pct * 100) + '%', total: usd(w.total) });
   $('#findings').innerHTML = w.findings.map((f) => `
     <div class="card finding">
@@ -468,7 +529,7 @@ function renderWaste(w) {
 async function loadGuardLog() {
   try {
     const { events } = await api('guard-log?n=200');
-    $('#w-guard').textContent = events.filter((e) => e.mode === 'block' || e.mode === 'warn').length;
+    countUp($('#w-guard'), events.filter((e) => e.mode === 'block' || e.mode === 'warn').length, (n) => String(Math.round(n)));
     $('#guardlog').innerHTML = events.length ? `<table><thead><tr><th>${t('th.when')}</th><th>${t('th.what')}</th><th>${t('th.action')}</th><th>${t('th.target')}</th></tr></thead><tbody>
       ${events.slice(0, 100).map((e) => `<tr><td class="muted small" style="white-space:nowrap">${ago(e.ts)}</td><td>${esc(t('kind.' + e.kind))}</td><td><span class="pill">${esc(e.mode)}</span></td><td><div class="t small" title="${esc(e.target)}">${esc(e.target || '')}</div></td></tr>`).join('')}
     </tbody></table>` : `<div class="empty">${esc(t('guard.empty'))}</div>`;
@@ -479,11 +540,12 @@ async function loadGuardLog() {
 let MODELS = ['inherit', 'haiku', 'sonnet', 'opus', 'fable'];
 async function loadAgents() {
   try {
-    const [{ agents, models }, { library }, { packs }] = await Promise.all([api('agents'), api('library'), api('packs')]);
+    const [{ agents, models }, { library }, { packs }, sk] = await Promise.all([api('agents'), api('library'), api('packs'), api('skills')]);
     MODELS = models;
     renderAgents(agents);
     renderLibrary(library);
     renderPacks(packs);
+    renderSkills(sk);
   } catch (e) { toast(e.message, true); }
 }
 const modelClass = (m) => 'model-' + (['opus', 'fable', 'sonnet', 'haiku'].find((f) => String(m).includes(f)) || 'x');
@@ -502,6 +564,24 @@ function renderPacks(packs) {
     if (b) b.onclick = async () => {
       try { const r = await api('packs/' + encodeURIComponent(p.id), { method: 'POST', body: { scope: 'user' } }); toast(t('ag.packInstalled', { n: r.installed.length })); loadAgents(); } catch (e) { toast(e.message, true); }
     };
+  });
+}
+
+function renderSkills({ skills, library }) {
+  const mine = new Map(skills.map((s) => [s.id, s]));
+  $('#skills').innerHTML = library.map((s, i) => {
+    const own = mine.get(s.id);
+    const ctl = own
+      ? `<button class="switch ${own.enabled ? 'on' : ''}" data-act="toggle" role="switch" aria-checked="${own.enabled}" aria-label="${esc(s.id)}"></button>`
+      : `<button class="btn sm" data-act="add">${esc(t('ag.add'))}</button>`;
+    return `<div class="pack" data-i="${i}"><b>${esc(s.id)} <span class="muted small" style="font-weight:400">${esc(s.category)}</span></b><p>${esc(s.description)}</p><div class="row2"><span class="muted small">${esc(t('ag.tokens', { n: s.estTokens }))}</span><span class="grow"></span>${ctl}</div></div>`;
+  }).join('');
+  $$('#skills .pack').forEach((el) => {
+    const s = library[+el.dataset.i];
+    const own = mine.get(s.id);
+    const add = $('[data-act=add]', el), tog = $('[data-act=toggle]', el);
+    if (add) add.onclick = async () => { try { await api('skills/install/' + encodeURIComponent(s.id), { method: 'POST', body: { scope: 'user' } }); toast(t('ag.installedToast', { id: s.id })); loadAgents(); } catch (e) { toast(e.message, true); } };
+    if (tog) tog.onclick = async () => { try { const r = await api(`skills/${own.scope}/${encodeURIComponent(s.id)}/toggle`, { method: 'POST' }); toast(t(r.enabled ? 'ag.on' : 'ag.off', { id: s.id })); loadAgents(); } catch (e) { toast(e.message, true); } };
   });
 }
 
@@ -691,6 +771,89 @@ $('#guard').onsubmit = async (e) => {
   await saveConfig('g.saved');
 };
 
+/* ---------- command palette (Ctrl/⌘+K) ---------- */
+const TABS = ['overview', 'sessions', 'tools', 'leaks', 'agents', 'settings'];
+const RANGES = ['today', '7d', '30d', 'month', '90d', 'all'];
+let cmdSel = 0, cmdItems = [];
+const cmdDialog = $('#cmdk');
+function commands(q) {
+  const out = [];
+  const add = (group, ic, label, run, hint = '') => out.push({ group, ic, label, run, hint });
+  TABS.forEach((tb, i) => add('cmd.goTo', '→', t('nav.' + tb), () => setTab(tb), String(i + 1)));
+  RANGES.forEach((r) => add('cmd.range', '◷', t('range.' + r), () => { S.range = r; $('#range').value = r; sset('cp.range', r); load(false, true); }));
+  add('cmd.actions', '↻', t('cmd.refresh'), () => load(true, true), 'r');
+  add('cmd.actions', '◐', t('cmd.theme'), () => $('#theme').click(), 't');
+  add('cmd.actions', '⤓', t('cmd.export'), async () => {
+    try {
+      if (!navigator.clipboard) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText('cplus export');
+      toast(t('cmd.copied'));
+    } catch { toast(t('cmd.copyFailed'), true); }
+  });
+  Object.entries(S.meta.langs || {}).forEach(([k, v]) => add('set.lang', '文', v, () => changeLanguage(k)));
+  for (const s of (S.data?.report.sessions || []).slice(0, 400)) add('nav.sessions', '#', s.title, () => { setTab('sessions'); openSession(s.sid); }, usd(s.cost));
+  if (!q) return out.filter((x) => x.group !== 'nav.sessions' && x.group !== 'set.lang').concat(out.filter((x) => x.group === 'nav.sessions').slice(0, 6));
+  const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+  return out.filter((x) => words.every((w) => `${t(x.group)} ${x.label}`.toLowerCase().includes(w))).slice(0, 60);
+}
+function renderCmd() {
+  cmdItems = commands($('#cmdk-q').value.trim());
+  cmdSel = Math.min(cmdSel, Math.max(0, cmdItems.length - 1));
+  let g = null;
+  $('#cmdk-list').innerHTML = cmdItems.map((x, i) => {
+    const head = x.group !== g ? `<div class="cmdk-group" role="presentation">${esc(t(x.group))}</div>` : '';
+    g = x.group;
+    return `${head}<div id="cmdk-option-${i}" class="cmdk-item ${i === cmdSel ? 'on' : ''}" role="option" aria-selected="${i === cmdSel}" data-i="${i}"><span class="ic" aria-hidden="true">${esc(x.ic)}</span><span class="cmdk-label">${esc(x.label)}</span><span class="hint">${esc(x.hint)}</span></div>`;
+  }).join('') || `<div class="empty">${esc(t('empty'))}</div>`;
+  $$('#cmdk-list .cmdk-item').forEach((el) => {
+    el.onmousemove = () => {
+      if (cmdSel === +el.dataset.i) return;
+      cmdSel = +el.dataset.i;
+      $$('#cmdk-list .cmdk-item').forEach((x) => { x.classList.toggle('on', x === el); x.setAttribute('aria-selected', String(x === el)); });
+      $('#cmdk-q').setAttribute('aria-activedescendant', el.id);
+    };
+    el.onclick = () => runCmd(+el.dataset.i);
+  });
+  const selected = $('#cmdk-list .cmdk-item.on');
+  if (selected) $('#cmdk-q').setAttribute('aria-activedescendant', selected.id);
+  else $('#cmdk-q').removeAttribute('aria-activedescendant');
+  selected?.scrollIntoView({ block: 'nearest' });
+}
+async function runCmd(i) {
+  const c = cmdItems[i];
+  if (!c) return;
+  closeCmd();
+  try { await c.run(); } catch (e) { toast(e.message, true); }
+}
+function openCmd() {
+  if (dlg.open || cmdDialog.open) return;
+  $('#cmdk-q').value = ''; cmdSel = 0;
+  cmdDialog.showModal();
+  renderCmd();
+  $('#cmdk-q').focus();
+}
+function closeCmd() { cmdDialog.close(); }
+$('#cmdk-open').onclick = openCmd;
+$('#cmdk-close').onclick = closeCmd;
+cmdDialog.onclick = (e) => { if (e.target === cmdDialog) closeCmd(); };
+$('#cmdk-q').oninput = () => { cmdSel = 0; renderCmd(); };
+$('#cmdk-q').onkeydown = (e) => {
+  if (e.key === 'ArrowDown') { e.preventDefault(); cmdSel = Math.min(cmdSel + 1, cmdItems.length - 1); renderCmd(); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); cmdSel = Math.max(cmdSel - 1, 0); renderCmd(); }
+  else if (e.key === 'Enter') { e.preventDefault(); runCmd(cmdSel); }
+};
+document.addEventListener('keydown', (e) => {
+  if (e.isComposing) return;
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); cmdDialog.open ? closeCmd() : openCmd(); return; }
+  const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName) || document.activeElement?.isContentEditable || dlg.open || cmdDialog.open;
+  if (typing || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key >= '1' && e.key <= '6') setTab(TABS[+e.key - 1]);
+  else if (e.key === 't') $('#theme').click();
+  else if (e.key === 'r') load(true, true);
+  else if (e.key === '/') { e.preventDefault(); setTab('sessions'); $('#s-search').focus(); }
+});
+$('#cmdk-open').innerHTML = `<span class="cmdk-symbol" aria-hidden="true">⌕</span><span class="cmdk-shortcut">${/Mac|iPhone/.test(navigator.platform) ? '⌘' : 'Ctrl'} K</span>`;
+
 /* ---------- boot ---------- */
 (async function boot() {
   const meta = await api('meta').catch(() => ({ langs: { en: 'English' }, lang: 'en', version: '' }));
@@ -702,9 +865,11 @@ $('#guard').onsubmit = async (e) => {
   const lang = [qs.get('lang'), sget('cp.lang'), meta.configuredLang, meta.lang !== 'en' ? meta.lang : null, nav].find((l) => l && meta.langs[l]) || 'en';
   $('#lang').value = lang;
   await loadLang(lang);
+  $$('.tile .val').forEach((v) => v.classList.add('skel'));
   setTab((location.hash || '#overview').slice(1));
-  await load();
+  await load(false, true);
   let rt;
-  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => S.data && (renderDaily(S.data.report), renderBlocks(S.data.report)), 150); });
+  addEventListener('resize', () => { moveIndicator(); clearTimeout(rt); rt = setTimeout(() => S.data && (renderDaily(S.data.report), renderBlocks(S.data.report)), 150); });
+  document.fonts?.ready.then(moveIndicator);
   setInterval(() => { if (document.visibilityState === 'visible' && S.tab === 'overview') load(); }, 30_000);
 })();

@@ -1,7 +1,7 @@
 {
   "name": "claudeplus",
-  "version": "0.1.0",
-  "description": "Slash commands for ClaudePlus: /claudeplus:cost, /claudeplus:leaks, /claudeplus:session-cost. Requires the `cplus` CLI (npm i -g claudeplus or npm link).",
+  "version": "0.1.1",
+  "description": "ClaudePlus slash commands for cost tracking, optimization, specs, plans, reviews, handoffs and releases. Cost commands require the `cplus` CLI (clone the repository and run npm link).",
   "author": { "name": "ClaudePlus contributors" },
   "license": "MIT",
   "keywords": ["cost", "tokens", "usage", "budget"]

@@ -6,7 +6,7 @@ export const c = {
   bold: wrap(1, 22), dim: wrap(2, 22), italic: wrap(3, 23),
   red: wrap(31, 39), green: wrap(32, 39), yellow: wrap(33, 39), blue: wrap(34, 39),
   magenta: wrap(35, 39), cyan: wrap(36, 39), gray: wrap(90, 39), white: wrap(97, 39),
-  orange: wrap('38;5;208', 39), violet: wrap('38;5;141', 39), teal: wrap('38;5;43', 39),
+  orange: wrap('38;5;208', 39), violet: wrap('38;5;141', 39), teal: wrap('38;5;43', 39), brand: wrap('38;5;42', 39),
 };
 
 export const strip = (s) => String(s).replace(/\x1b\[[0-9;]*m/g, '');
@@ -78,18 +78,18 @@ export function table(rows, cols, { indent = '  ' } = {}) {
 export function box(title, body) {
   const lines = String(body).split('\n');
   const w = Math.max(vlen(title) + 4, ...lines.map(vlen)) + 2;
-  const top = c.violet('╭─ ') + c.bold(title) + ' ' + c.violet('─'.repeat(Math.max(0, w - vlen(title) - 3)) + '╮');
-  const mid = lines.map((l) => c.violet('│') + ' ' + pad(l, w - 1) + c.violet('│'));
-  const bot = c.violet('╰' + '─'.repeat(w) + '╯');
+  const top = c.gray('╭─ ') + c.bold(title) + ' ' + c.gray('─'.repeat(Math.max(0, w - vlen(title) - 3)) + '╮');
+  const mid = lines.map((l) => c.gray('│') + ' ' + pad(l, w - 1) + c.gray('│'));
+  const bot = c.gray('╰' + '─'.repeat(w) + '╯');
   return [top, ...mid, bot].join('\n');
 }
 
-export const logo = () => c.violet(c.bold('◆ ClaudePlus')) + c.gray('  — power-up layer for Claude Code');
+export const logo = () => c.brand('▣') + ' ' + c.bold('Claude') + c.brand(c.bold('Plus')) + c.gray('  · the companion for Claude Code');
 
 export function progress(done, total, label = '') {
   if (!process.stderr.isTTY) return;
   const w = 28;
   const f = total ? Math.round((done / total) * w) : w;
-  process.stderr.write(`\r  ${c.violet('█'.repeat(f))}${c.gray('░'.repeat(w - f))} ${done}/${total} ${c.gray(label.slice(-40))}\x1b[K`);
+  process.stderr.write(`\r  ${c.brand('█'.repeat(f))}${c.gray('░'.repeat(w - f))} ${done}/${total} ${c.gray(label.slice(-40))}\x1b[K`);
   if (done >= total) process.stderr.write('\r\x1b[K');
 }

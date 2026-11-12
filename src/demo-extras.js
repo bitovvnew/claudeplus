@@ -4,11 +4,14 @@ import path from 'node:path';
 import { GUARD_LOG, ensureDir } from './paths.js';
 import { installPack, installFromLibrary, setEnabled, setModel } from './agents.js';
 import { loadConfig, saveConfig } from './config.js';
+import { installSkill } from './skills.js';
 
 export function seedDemoExtras() {
   for (const p of ['essentials', 'cost-saver']) { try { installPack(p); } catch {} }
   for (const id of ['ui-designer', 'nextjs-expert', 'sql-optimizer']) { try { installFromLibrary(id); } catch {} }
+  for (const p of ['design-studio']) { try { installPack(p); } catch {} }
   try { setEnabled('refactorer', false); } catch {}
+  for (const id of ['token-diet', 'human-grade-ui', 'spec-driven-dev', 'motion-design']) { try { installSkill(id); } catch {} }
   try { setModel('planner', 'opus'); } catch {}
 
   const cfg = loadConfig();

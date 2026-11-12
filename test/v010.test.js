@@ -23,7 +23,7 @@ const en = JSON.parse(fs.readFileSync(path.join(ROOT, 'locales', 'en.json'), 'ut
 const placeholders = (s) => [...String(s).matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort().join(',');
 
 test('every locale is complete and keeps placeholders', () => {
-  assert.equal(Object.keys(LANGS).length, 16);
+  assert.equal(Object.keys(LANGS).length, 17);
   for (const lang of Object.keys(LANGS)) {
     const raw = JSON.parse(fs.readFileSync(path.join(ROOT, 'locales', `${lang}.json`), 'utf8'));
     for (const k of Object.keys(en)) {
@@ -39,7 +39,7 @@ test('every locale is complete and keeps placeholders', () => {
 
 test('library: 60+ agents with valid frontmatter, packs reference real agents', () => {
   const lib = libraryList();
-  assert.ok(lib.length >= 60, `only ${lib.length} agents`);
+  assert.ok(lib.length >= 90, `only ${lib.length} agents`);
   const ids = new Set();
   for (const a of lib) {
     assert.ok(!ids.has(a.id), `duplicate ${a.id}`); ids.add(a.id);

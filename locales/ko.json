@@ -27,5 +27,20 @@
   "leak.premium-subagents.title": "비싼 모델에서 도는 서브에이전트", "leak.premium-subagents.detail": "서브에이전트가 Opus/Fable에 {cost}를 썼습니다. Sonnet 5.5였다면 {savings} 덜 들었습니다.", "leak.premium-subagents.advice": "검색·읽기 에이전트에는 `model: sonnet` 또는 `model: haiku`를 지정하세요(cplus agents model <name> haiku 또는 에이전트 탭).",
   "leak.duplicate-reads.title": "같은 파일을 반복해서 읽음", "leak.duplicate-reads.detail": "변경 없는 파일을 불필요하게 전체 읽기 {count}회(약 {tokens} 토큰).", "leak.duplicate-reads.advice": "ClaudePlus Guard를 켜세요(cplus install --guard): 파일이 바뀌지 않았다고 Claude에 알려줍니다.",
   "leak.big-outputs.title": "거대한 도구 출력", "leak.big-outputs.detail": "25k자를 넘는 도구 결과 {count}개(약 {tokens} 토큰).", "leak.big-outputs.advice": "파일은 나눠 읽고(offset/limit), 출력을 제한하고(| head, --quiet), cat 대신 Grep으로 검색하세요.",
-  "leak.thinking.title": "출력 중 사고 비율", "leak.thinking.detail": "출력 토큰의 {pct}가 사고입니다. 어려운 작업에선 정상입니다.", "leak.thinking.advice": "단순 작업은 effort를 낮추세요: /effort low 또는 medium."
+  "leak.thinking.title": "출력 중 사고 비율", "leak.thinking.detail": "출력 토큰의 {pct}가 사고입니다. 어려운 작업에선 정상입니다.", "leak.thinking.advice": "단순 작업은 effort를 낮추세요: /effort low 또는 medium.",
+  "card.skills": "스킬",
+  "card.skillsHint": "Claude가 따르는 플레이북: 토큰 절약, 스펙 중심, 디자이너급 UI…",
+  "cmd.title": "명령 팔레트",
+  "cmd.placeholder": "명령을 입력하거나 세션을 검색하세요…",
+  "cmd.goTo": "이동",
+  "cmd.range": "기간",
+  "cmd.actions": "작업",
+  "cmd.refresh": "데이터 새로고침",
+  "cmd.theme": "테마 전환",
+  "cmd.export": "CSV 내보내기 명령 복사",
+  "cmd.copied": "복사됨: cplus export",
+  "cmd.copyFailed": "복사하지 못했습니다. 터미널에서 cplus export를 실행하세요.",
+  "cmd.navigate": "이동",
+  "cmd.run": "실행",
+  "cmd.close": "닫기"
 }

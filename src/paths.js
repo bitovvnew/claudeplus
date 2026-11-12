@@ -32,6 +32,20 @@ export function ensureDir(dir) {
   return dir;
 }
 
+/** Project files may live on a different drive from the user's trash directory. */
+export function moveToTrash(source, name) {
+  const dest = path.join(ensureDir(TRASH_DIR), name);
+  try {
+    fs.renameSync(source, dest);
+  } catch (error) {
+    if (error.code !== 'EXDEV') throw error;
+    // Remove the original only after its complete copy exists in trash.
+    fs.cpSync(source, dest, { recursive: true, errorOnExist: true, force: false, verbatimSymlinks: true });
+    fs.rmSync(source, { recursive: true });
+  }
+  return dest;
+}
+
 export function readJson(file, fallback) {
   try {
     return JSON.parse(fs.readFileSync(file, 'utf8').replace(/^﻿/, ''));

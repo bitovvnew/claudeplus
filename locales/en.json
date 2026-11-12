@@ -194,5 +194,20 @@
   "leak.big-outputs.advice": "Read files in slices (offset/limit), cap command output (| head, --quiet), search with Grep instead of cat.",
   "leak.thinking.title": "Thinking share of output tokens",
   "leak.thinking.detail": "{pct} of output tokens are thinking. That's normal for hard tasks.",
-  "leak.thinking.advice": "For routine work (renames, small edits) lower the effort: /effort low or medium."
+  "leak.thinking.advice": "For routine work (renames, small edits) lower the effort: /effort low or medium.",
+  "card.skills": "Skills",
+  "card.skillsHint": "playbooks Claude follows: token diet, specs, human-grade UI…",
+  "cmd.title": "Command palette",
+  "cmd.placeholder": "Type a command or search sessions…",
+  "cmd.goTo": "Go to",
+  "cmd.range": "Range",
+  "cmd.actions": "Actions",
+  "cmd.refresh": "Refresh data",
+  "cmd.theme": "Toggle theme",
+  "cmd.export": "Copy CSV export command",
+  "cmd.copied": "Copied: cplus export",
+  "cmd.copyFailed": "Could not copy. Run cplus export in your terminal.",
+  "cmd.navigate": "navigate",
+  "cmd.run": "run",
+  "cmd.close": "close"
 }

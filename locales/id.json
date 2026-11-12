@@ -27,5 +27,20 @@
   "leak.premium-subagents.title": "Subagen di model premium", "leak.premium-subagents.detail": "Subagen menghabiskan {cost} di Opus/Fable. Dengan Sonnet 5.5 akan {savings} lebih murah.", "leak.premium-subagents.advice": "Beri agen pencarian/baca `model: sonnet` atau `model: haiku` (cplus agents model <name> haiku atau tab Agen).",
   "leak.duplicate-reads.title": "File yang sama dibaca berulang", "leak.duplicate-reads.detail": "{count} pembacaan penuh ekstra atas file yang tidak berubah (~{tokens} token ke konteks).", "leak.duplicate-reads.advice": "Aktifkan ClaudePlus Guard (cplus install --guard): ia memberi tahu Claude bahwa file tidak berubah.",
   "leak.big-outputs.title": "Output alat raksasa", "leak.big-outputs.detail": "{count} hasil alat lebih dari 25k karakter (~{tokens} token).", "leak.big-outputs.advice": "Baca file per bagian (offset/limit), batasi output (| head, --quiet), cari dengan Grep alih-alih cat.",
-  "leak.thinking.title": "Porsi thinking di output", "leak.thinking.detail": "{pct} token output adalah thinking. Wajar untuk tugas sulit.", "leak.thinking.advice": "Untuk pekerjaan rutin turunkan effort: /effort low atau medium."
+  "leak.thinking.title": "Porsi thinking di output", "leak.thinking.detail": "{pct} token output adalah thinking. Wajar untuk tugas sulit.", "leak.thinking.advice": "Untuk pekerjaan rutin turunkan effort: /effort low atau medium.",
+  "card.skills": "Skill",
+  "card.skillsHint": "panduan yang diikuti Claude: hemat token, spesifikasi, UI kelas desainer…",
+  "cmd.title": "Palet perintah",
+  "cmd.placeholder": "Ketik perintah atau cari sesi…",
+  "cmd.goTo": "Buka",
+  "cmd.range": "Periode",
+  "cmd.actions": "Tindakan",
+  "cmd.refresh": "Perbarui data",
+  "cmd.theme": "Ganti tema",
+  "cmd.export": "Salin perintah ekspor CSV",
+  "cmd.copied": "Disalin: cplus export",
+  "cmd.copyFailed": "Tidak dapat menyalin. Jalankan cplus export di terminal Anda.",
+  "cmd.navigate": "navigasi",
+  "cmd.run": "jalankan",
+  "cmd.close": "tutup"
 }

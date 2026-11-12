@@ -27,5 +27,20 @@
   "leak.premium-subagents.title": "Subagentes em modelos premium", "leak.premium-subagents.detail": "Subagentes gastaram {cost} em Opus/Fable. No Sonnet 5.5 teria custado {savings} a menos.", "leak.premium-subagents.advice": "Dê `model: sonnet` ou `model: haiku` aos agentes de busca/leitura (cplus agents model <name> haiku ou a aba Agentes).",
   "leak.duplicate-reads.title": "O mesmo arquivo lido de novo e de novo", "leak.duplicate-reads.detail": "{count} leituras completas extras de arquivos sem alteração (~{tokens} tokens no contexto).", "leak.duplicate-reads.advice": "Ative o ClaudePlus Guard (cplus install --guard): ele avisa o Claude que o arquivo não mudou.",
   "leak.big-outputs.title": "Saídas gigantes de ferramentas", "leak.big-outputs.detail": "{count} resultados com mais de 25k caracteres (~{tokens} tokens).", "leak.big-outputs.advice": "Leia arquivos em partes (offset/limit), limite a saída (| head, --quiet), busque com Grep em vez de cat.",
-  "leak.thinking.title": "Participação do thinking na saída", "leak.thinking.detail": "{pct} dos tokens de saída são thinking. Normal em tarefas difíceis.", "leak.thinking.advice": "Para tarefas rotineiras, reduza o esforço: /effort low ou medium."
+  "leak.thinking.title": "Participação do thinking na saída", "leak.thinking.detail": "{pct} dos tokens de saída são thinking. Normal em tarefas difíceis.", "leak.thinking.advice": "Para tarefas rotineiras, reduza o esforço: /effort low ou medium.",
+  "card.skills": "Skills",
+  "card.skillsHint": "guias que o Claude segue: dieta de tokens, specs, UI de nível humano…",
+  "cmd.title": "Paleta de comandos",
+  "cmd.placeholder": "Digite um comando ou pesquise sessões…",
+  "cmd.goTo": "Ir para",
+  "cmd.range": "Período",
+  "cmd.actions": "Ações",
+  "cmd.refresh": "Atualizar dados",
+  "cmd.theme": "Alternar tema",
+  "cmd.export": "Copiar comando de exportação CSV",
+  "cmd.copied": "Copiado: cplus export",
+  "cmd.copyFailed": "Não foi possível copiar. Execute cplus export no terminal.",
+  "cmd.navigate": "navegar",
+  "cmd.run": "executar",
+  "cmd.close": "fechar"
 }

@@ -16,6 +16,7 @@ import { analyzeWaste } from './waste.js';
 import { loadConfig, saveConfig } from './config.js';
 import { PRICES } from './pricing.js';
 import * as A from './agents.js';
+import * as K from './skills.js';
 import { status as installStatus, install, uninstall } from './installer.js';
 import { c } from './ui.js';
 
@@ -91,6 +92,12 @@ async function api(req, res, url) {
   if (p[0] === 'meta' && m === 'GET') {
     const cfg = loadConfig();
     return send(res, 200, { version: VERSION, demo: !!process.env.CPLUS_DEMO, langs: LANGS, lang: detectLang(cfg.lang), configuredLang: cfg.lang || '', themes: THEMES, theme: cfg.statusline.theme });
+  }
+  if (p[0] === 'skills') {
+    if (m === 'GET' && !p[1]) return send(res, 200, { skills: K.listSkills(), library: K.skillsLibrary() });
+    if (m === 'POST' && p[1] === 'install' && p[2]) { const b = await readBody(req); return send(res, 200, K.installSkill(p[2], { scope: b.scope || 'user' })); }
+    if (m === 'POST' && p[3] === 'toggle') { const cur = K.findSkill(p[2], { scope: p[1] }); return send(res, 200, K.setSkillEnabled(p[2], !cur.enabled, { scope: p[1] })); }
+    if (m === 'DELETE' && p[2]) return send(res, 200, K.removeSkill(p[2], { scope: p[1] }));
   }
   if (p[0] === 'packs') {
     if (m === 'GET') return send(res, 200, { packs: A.packsList() });

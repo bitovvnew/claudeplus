@@ -23,3 +23,15 @@ fs.mkdirSync(path.join(ROOT, 'docs'), { recursive: true });
 fs.writeFileSync(path.join(ROOT, 'docs', 'AGENTS.md'), md);
 fs.rmSync(path.join(ROOT, '.tmp-home'), { recursive: true, force: true });
 console.log(`docs/AGENTS.md: ${lib.length} agents, ${packs.length} packs`);
+
+const { skillsLibrary } = await import('../src/skills.js');
+const skills = skillsLibrary();
+let sk = `# Skill library\n\n${skills.length} Claude Code skills — playbooks Claude loads automatically when the task matches their description.\n\n`;
+sk += '```bash\ncplus skills library          # browse\ncplus skills add token-diet    # install one (~/.claude/skills)\ncplus skills add all           # install everything\n```\n';
+let scat = null;
+for (const s of skills) {
+  if (s.category !== scat) { scat = s.category; sk += `\n## ${scat}\n\n| Skill | When Claude uses it |\n|---|---|\n`; }
+  sk += `| [\`${s.id}\`](../library/skills/${s.category}/${s.id}/SKILL.md) | ${s.description.replace(/\|/g, '\\|')} |\n`;
+}
+fs.writeFileSync(path.join(ROOT, 'docs', 'SKILLS.md'), sk);
+console.log(`docs/SKILLS.md: ${skills.length} skills`);

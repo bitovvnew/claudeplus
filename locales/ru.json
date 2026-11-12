@@ -194,5 +194,20 @@
   "leak.big-outputs.advice": "Читайте файлы кусками (offset/limit), ограничивайте вывод команд (| head, --quiet), ищите через Grep вместо cat.",
   "leak.thinking.title": "Доля «размышлений» в выходных токенах",
   "leak.thinking.detail": "{pct} выходных токенов — thinking. Это нормально для сложных задач.",
-  "leak.thinking.advice": "Для рутины (переименования, мелкие правки) понижайте effort: /effort low или medium."
+  "leak.thinking.advice": "Для рутины (переименования, мелкие правки) понижайте effort: /effort low или medium.",
+  "card.skills": "Скиллы",
+  "card.skillsHint": "методики, по которым работает Claude: экономия токенов, спеки, дизайн уровня студии…",
+  "cmd.title": "Палитра команд",
+  "cmd.placeholder": "Введите команду или найдите сессию…",
+  "cmd.goTo": "Перейти",
+  "cmd.range": "Период",
+  "cmd.actions": "Действия",
+  "cmd.refresh": "Обновить данные",
+  "cmd.theme": "Переключить тему",
+  "cmd.export": "Скопировать команду экспорта CSV",
+  "cmd.copied": "Скопировано: cplus export",
+  "cmd.copyFailed": "Не удалось скопировать. Выполните cplus export в терминале.",
+  "cmd.navigate": "навигация",
+  "cmd.run": "выполнить",
+  "cmd.close": "закрыть"
 }

@@ -27,5 +27,20 @@
   "leak.premium-subagents.title": "Subagenten auf Premium-Modellen", "leak.premium-subagents.detail": "Subagenten haben {cost} auf Opus/Fable ausgegeben. Mit Sonnet 5.5 wären es {savings} weniger gewesen.", "leak.premium-subagents.advice": "Gib Such-/Lese-Agenten `model: sonnet` oder `model: haiku` (cplus agents model <name> haiku oder Tab Agenten).",
   "leak.duplicate-reads.title": "Dieselbe Datei immer wieder gelesen", "leak.duplicate-reads.detail": "{count} zusätzliche vollständige Lesevorgänge unveränderter Dateien (~{tokens} Tokens im Kontext).", "leak.duplicate-reads.advice": "ClaudePlus Guard aktivieren (cplus install --guard): er sagt Claude, dass sich die Datei nicht geändert hat.",
   "leak.big-outputs.title": "Riesige Tool-Ausgaben", "leak.big-outputs.detail": "{count} Tool-Ergebnisse über 25k Zeichen (~{tokens} Tokens).", "leak.big-outputs.advice": "Dateien in Abschnitten lesen (offset/limit), Ausgaben begrenzen (| head, --quiet), mit Grep statt cat suchen.",
-  "leak.thinking.title": "Thinking-Anteil an der Ausgabe", "leak.thinking.detail": "{pct} der Ausgabe-Tokens sind Thinking. Bei schweren Aufgaben normal.", "leak.thinking.advice": "Für Routinearbeit den Effort senken: /effort low oder medium."
+  "leak.thinking.title": "Thinking-Anteil an der Ausgabe", "leak.thinking.detail": "{pct} der Ausgabe-Tokens sind Thinking. Bei schweren Aufgaben normal.", "leak.thinking.advice": "Für Routinearbeit den Effort senken: /effort low oder medium.",
+  "card.skills": "Skills",
+  "card.skillsHint": "Playbooks für Claude: Token-Diät, Specs, UI auf Designer-Niveau…",
+  "cmd.title": "Befehlspalette",
+  "cmd.placeholder": "Befehl eingeben oder Sitzungen suchen…",
+  "cmd.goTo": "Gehe zu",
+  "cmd.range": "Zeitraum",
+  "cmd.actions": "Aktionen",
+  "cmd.refresh": "Daten aktualisieren",
+  "cmd.theme": "Darstellung wechseln",
+  "cmd.export": "CSV-Exportbefehl kopieren",
+  "cmd.copied": "Kopiert: cplus export",
+  "cmd.copyFailed": "Kopieren fehlgeschlagen. Führe cplus export im Terminal aus.",
+  "cmd.navigate": "navigieren",
+  "cmd.run": "ausführen",
+  "cmd.close": "schließen"
 }

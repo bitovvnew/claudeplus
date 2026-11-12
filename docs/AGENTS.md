@@ -1,6 +1,6 @@
 # Agent library
 
-62 ready-made Claude Code subagents in 10 categories, plus 10 packs.
+94 ready-made Claude Code subagents in 13 categories, plus 12 packs.
 
 Models are picked for cost: 🟢 **haiku** for reading, searching and mechanical work, 🔵 **sonnet** for everyday engineering, 🟠 **opus** for design and planning.
 
@@ -14,15 +14,17 @@ cplus agents pack cost-saver     # a whole pack
 
 | Pack | Agents | What it is for |
 |---|---|---|
-| `essentials` | 6 | The core crew every project wants: cheap scout, reviewer, debugger, test runner, planner. |
-| `cost-saver` | 7 | Cheap Haiku agents that keep expensive context clean: research, bulk edits, diff and log summaries, handoffs. |
-| `frontend` | 9 | React/Next/Vue/Svelte experts, CSS and Tailwind fixers, a UI designer and an accessibility auditor. |
-| `backend` | 9 | API design, Node/Python/Go/Rust specialists, databases, SQL tuning, GraphQL and auth. |
+| `essentials` | 6 | The core crew every project wants: cheap scout, reviewer, debugger, test runner, planner, refactorer. |
+| `cost-saver` | 8 | Cheap Haiku agents that keep the expensive context clean: research, bulk edits, diff and log summaries, handoffs, a cost auditor. |
+| `design-studio` | 10 | A senior design team: critic, brand, motion, typography, landing pages, dashboards, SVG illustration, UI and design systems. |
+| `frontend` | 9 | React, Next, Vue, Svelte, Astro, Angular and Three.js experts plus CSS and Tailwind fixers. |
+| `backend` | 15 | API design, Node/Python/Go/Rust/Java/.NET/PHP/Rails, databases, SQL tuning, GraphQL, auth, payments and BaaS. |
+| `bots-automation` | 6 | Telegram and Discord bots, scrapers, automations, shell scripts and regex. |
 | `devops` | 7 | Docker, Kubernetes, CI, Terraform, releases, logs and incident response. |
-| `quality` | 8 | Tests, e2e, security, performance, dependencies, lint and type errors. |
-| `data-ai` | 5 | Analysis, ML engineering, prompt engineering, LLM features and notebook cleanup. |
-| `docs` | 6 | READMEs, API docs, changelogs, commit messages and translations. |
-| `mobile` | 4 | React Native, Flutter, Swift and Kotlin specialists. |
+| `quality` | 9 | Tests, e2e, security, privacy, performance, dependencies, lint and type errors. |
+| `data-ai` | 7 | Analysis, SQL, ML engineering, RAG, prompt engineering, LLM features and notebook cleanup. |
+| `platforms` | 7 | Mobile, desktop, browser extensions and game development. |
+| `docs` | 8 | READMEs, API docs, changelogs, commit messages, translations, i18n and onboarding guides. |
 | `product` | 4 | Specs, UX copy, SEO and migration planning. |
 
 ## core
@@ -43,8 +45,22 @@ cplus agents pack cost-saver     # a whole pack
 | `bulk-editor` | 🟢 haiku | Read, Grep, Glob, Edit, Write, Bash | Applies the same mechanical change across many files (renames, import updates, API migrations) on a cheap model. Use for repetitive edits. |
 | `cheap-researcher` | 🟢 haiku | Read, Grep, Glob, WebSearch, WebFetch | Low-cost web researcher for docs, changelogs, error messages and API references. Use PROACTIVELY instead of browsing in the main (expensive) conversation. |
 | `context-keeper` | 🟢 haiku | Read, Grep, Glob, Write | Writes a compact HANDOFF.md of the current task (goal, decisions, files, next steps) so you can /clear and resume cheaply. Use before long breaks or when context is huge. |
+| `cost-auditor` | 🟢 haiku | Read, Grep, Glob, Bash | Runs `cplus waste` / `cplus tools` and turns the numbers into a short, prioritized list of habit and config changes. Use when the user asks why Claude Code is expensive or how to spend less. |
 | `diff-summarizer` | 🟢 haiku | Read, Grep, Glob, Bash | Summarizes large diffs, PRs or branches into a short overview so the main conversation does not have to read them. Use before reviewing big changes. |
 | `repo-mapper` | 🟢 haiku | Read, Grep, Glob | Builds a compact map of an unfamiliar repository (structure, entry points, key modules, conventions) and saves it for reuse. Use at the start of work in a new codebase. |
+
+## design
+
+| Agent | Model | Tools | When Claude uses it |
+|---|---|---|---|
+| `brand-designer` | 🟠 opus | Read, Grep, Glob, Edit, Write, Bash | Creates a cohesive brand kit: logo directions (SVG), color system, type pairing, voice and usage rules. Use when starting a product or when the brand feels generic. |
+| `dashboard-designer` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Designs data dashboards: the right chart for each question, KPI tiles, filters, empty/loading states, color used for meaning. Use when building analytics or admin screens. |
+| `design-critic` | 🟠 opus | Read, Grep, Glob | Senior design critic. Reviews screens, components or screenshots for hierarchy, spacing, typography, color, consistency and "looks AI-generated" tells, with concrete fixes. Use before shipping any UI. |
+| `email-template-builder` | 🟢 haiku | Read, Grep, Glob, Edit, Write, Bash | Builds responsive HTML emails that render in Gmail, Outlook and Apple Mail (tables, inline styles, dark-mode safe). Use for transactional or marketing emails. |
+| `landing-page-builder` | 🟠 opus | Read, Grep, Glob, Edit, Write, Bash | Builds a complete, conversion-focused landing page (hero, proof, features, FAQ, CTA) that looks designed by a studio, not generated. Use for launches, product pages and project sites. |
+| `motion-designer` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Adds purposeful UI motion: entrances, state transitions, number counters, chart reveals, micro-interactions — performant and reduced-motion safe. Use when the UI feels static or the user wants "wow". |
+| `svg-illustrator` | 🔵 sonnet | Read, Grep, Glob, Write, Edit | Draws clean SVG icons, illustrations, pixel art and diagrams by hand-writing SVG. Use for logos, empty-state art, icons and README graphics. |
+| `typography-expert` | 🟢 haiku | Read, Grep, Glob, Edit, Write, Bash | Fixes typography: type scale, line height, measure, weights, font loading, numeric alignment. Use when text looks off or hard to read. |
 
 ## quality
 
@@ -55,6 +71,7 @@ cplus agents pack cost-saver     # a whole pack
 | `e2e-tester` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Creates and repairs end-to-end tests (Playwright, Cypress) for critical user flows. Use for login, checkout, onboarding or any flow that must never break. |
 | `lint-fixer` | 🟢 haiku | Read, Grep, Glob, Edit, Write, Bash | Runs linters/formatters and fixes the reported problems without changing behaviour. Use when CI fails on lint or before committing. |
 | `perf-optimizer` | 🔵 sonnet | Read, Grep, Glob, Bash, Edit | Finds and fixes performance bottlenecks (slow queries, N+1, heavy renders, blocking I/O, memory bloat, big bundles). Use when something is slow or before scaling. |
+| `privacy-compliance` | 🔵 sonnet | Read, Grep, Glob | Reviews data handling for privacy compliance (GDPR/CCPA basics): PII inventory, consent, retention, deletion, logging of personal data. Use before launching features that collect user data. |
 | `security-auditor` | 🔵 sonnet | Read, Grep, Glob | Audits code for security vulnerabilities (injection, auth bypass, secrets in code, unsafe deserialization, SSRF, path traversal, XSS, weak crypto). Use before releases or when handling user input, auth or payments. |
 | `test-writer` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Writes focused unit and integration tests for new or untested code, matching the project's test framework and style. Use after implementing a feature or when coverage is missing. |
 | `type-fixer` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Fixes TypeScript / mypy / Pyright type errors properly instead of silencing them. Use when the type-checker fails. |
@@ -63,12 +80,15 @@ cplus agents pack cost-saver     # a whole pack
 
 | Agent | Model | Tools | When Claude uses it |
 |---|---|---|---|
+| `angular-expert` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Angular specialist: standalone components, signals, RxJS, routing, forms. Use for Angular apps. |
+| `astro-expert` | 🟢 haiku | Read, Grep, Glob, Edit, Write, Bash | Astro specialist: content collections, islands, SSG/SSR, image optimization. Use for Astro sites and blogs. |
 | `component-builder` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Builds reusable, typed, accessible UI components with variants and docs/stories. Use when adding to a design system. |
 | `css-stylist` | 🟢 haiku | Read, Grep, Glob, Edit, Write, Bash | Fixes layout and styling bugs (flex/grid, overflow, responsive breakpoints, dark mode) with minimal CSS. Use for visual glitches. |
 | `nextjs-expert` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Next.js App Router expert: server/client components, routing, data fetching, caching, metadata, edge/runtime config. Use for Next.js features or migrations. |
 | `react-expert` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | React specialist for components, hooks, state, rendering performance and React 19 features. Use for any non-trivial React work. |
 | `svelte-expert` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Svelte 5 / SvelteKit specialist (runes, load functions, form actions). Use for Svelte work. |
 | `tailwind-expert` | 🟢 haiku | Read, Grep, Glob, Edit, Write, Bash | Tailwind CSS specialist: utility composition, design tokens, responsive and dark variants, cleaning up class soup. Use for Tailwind styling. |
+| `threejs-expert` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Three.js / React Three Fiber specialist: scenes, shaders, performance, interaction. Use for 3D on the web. |
 | `ui-designer` | 🟠 opus | Read, Grep, Glob, Edit, Write, Bash | Designs and implements polished UI: layout, typography, spacing, color, states and micro-interactions. Use when something must look great, not just work. |
 | `vue-expert` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Vue 3 / Nuxt specialist: Composition API, Pinia, routing, SSR. Use for Vue or Nuxt work. |
 
@@ -79,12 +99,29 @@ cplus agents pack cost-saver     # a whole pack
 | `api-designer` | 🟠 opus | Read, Grep, Glob | Designs REST/GraphQL APIs: resources, endpoints, errors, pagination, versioning, auth. Use before building or changing an API. |
 | `auth-expert` | 🟠 opus | Read, Grep, Glob | Reviews and designs authentication and authorization: sessions, JWT, OAuth/OIDC, password storage, RBAC, multi-tenant isolation. Use for anything touching login or permissions. |
 | `db-architect` | 🟠 opus | Read, Grep, Glob | Designs database schemas, indexes, constraints and migrations for correctness and scale. Use before adding tables or changing data models. |
+| `dotnet-expert` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | C# / .NET specialist: ASP.NET Core, EF Core, async, DI, minimal APIs. Use for .NET code. |
 | `go-expert` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Go specialist: idiomatic packages, error handling, concurrency, context, testing. Use for Go code. |
 | `graphql-expert` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | GraphQL specialist: schema design, resolvers, DataLoader batching, pagination, auth. Use for GraphQL APIs. |
+| `java-spring` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Java / Spring Boot specialist: REST controllers, JPA, transactions, validation, testing. Use for Spring services. |
 | `node-backend` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Node.js/TypeScript backend specialist (Express, Fastify, Nest, Hono): routes, validation, errors, background jobs. Use for Node server work. |
+| `php-laravel` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | PHP / Laravel specialist: Eloquent, queues, validation, policies, migrations. Use for Laravel apps. |
 | `python-backend` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Python backend specialist (FastAPI, Django, Flask): models, endpoints, async I/O, migrations, typing. Use for Python services. |
+| `rails-expert` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Ruby on Rails specialist: ActiveRecord, Hotwire, jobs, migrations, testing. Use for Rails apps. |
 | `rust-expert` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Rust specialist: ownership, lifetimes, error types, async (tokio), performance, unsafe review. Use for Rust code and compiler fights. |
 | `sql-optimizer` | 🔵 sonnet | Read, Grep, Glob, Bash | Finds and fixes slow SQL: N+1 queries, missing indexes, bad joins, full scans. Use when pages or jobs are slow because of the database. |
+| `stripe-payments` | 🟠 opus | Read, Grep, Glob, Edit, Write, Bash | Integrates Stripe (or similar) payments: checkout, subscriptions, webhooks, idempotency, taxes, test mode. Use for anything that charges money. |
+| `supabase-firebase` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Supabase / Firebase specialist: auth, row-level security / rules, storage, edge functions, realtime. Use for BaaS-backed apps. |
+
+## bots-automation
+
+| Agent | Model | Tools | When Claude uses it |
+|---|---|---|---|
+| `automation-engineer` | 🟢 haiku | Read, Grep, Glob, Edit, Write, Bash | Automates repetitive workflows with scripts, cron, GitHub Actions, n8n/Zapier-style integrations. Use when the user repeats the same manual steps. |
+| `discord-bot-dev` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Builds Discord bots (discord.js, discord.py): slash commands, intents, components, sharding. Use for Discord bots. |
+| `regex-wizard` | 🟢 haiku | Read, Grep, Glob | Writes, explains and tests regular expressions for any flavor (JS, PCRE, Python, .NET, grep). Use whenever a regex is needed or misbehaving. |
+| `scraper-builder` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Builds robust, polite scrapers and data collectors (HTTP first, Playwright when needed): parsing, retries, rate limits, storage. Use for data collection tasks that respect site terms. |
+| `shell-scripter` | 🟢 haiku | Read, Grep, Glob, Edit, Write, Bash | Writes portable, safe shell and PowerShell scripts (set -euo pipefail, quoting, cross-platform notes). Use for build, setup or ops scripts. |
+| `telegram-bot-dev` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Builds Telegram bots (aiogram, python-telegram-bot, grammY, Telegraf): commands, inline keyboards, payments, webhooks, rate limits. Use for any Telegram bot work. |
 
 ## devops
 
@@ -107,6 +144,16 @@ cplus agents pack cost-saver     # a whole pack
 | `ml-engineer` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Machine-learning engineer: training pipelines, evaluation, feature engineering, experiment tracking, model serving. Use for ML code. |
 | `notebook-cleaner` | 🟢 haiku | Read, Grep, Glob, Edit, Write, Bash | Turns messy Jupyter notebooks into clean, runnable scripts or modules. Use when exploration code needs to become production code. |
 | `prompt-engineer` | 🟠 opus | Read, Grep, Glob, Edit, Write | Improves prompts, system prompts, CLAUDE.md files and agent descriptions for clarity and reliability. Use when an LLM feature behaves inconsistently. |
+| `rag-engineer` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Builds retrieval-augmented generation: chunking, embeddings, hybrid search, reranking, citations, evals. Use when an AI feature must answer from your documents. |
+| `sql-analyst` | 🟢 haiku | Read, Grep, Glob, Bash | Writes analytical SQL (window functions, CTEs, cohort and funnel queries) and explains results. Use for reporting and ad-hoc data questions. |
+
+## platforms
+
+| Agent | Model | Tools | When Claude uses it |
+|---|---|---|---|
+| `chrome-extension-dev` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Builds Chrome/Edge extensions on Manifest V3: service workers, content scripts, permissions, messaging. Use for browser extensions. |
+| `electron-desktop` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Electron / Tauri desktop app specialist: IPC, security (contextIsolation), packaging, auto-update. Use for desktop apps. |
+| `unity-godot-dev` | 🔵 sonnet | Read, Grep, Glob, Edit, Write, Bash | Game developer for Unity (C#) and Godot (GDScript): gameplay systems, scenes, performance, input. Use for game code. |
 
 ## docs
 
@@ -116,6 +163,8 @@ cplus agents pack cost-saver     # a whole pack
 | `changelog-writer` | 🟢 haiku | Read, Grep, Glob, Bash | Writes user-facing changelog entries from commits and diffs (Keep a Changelog style). Use before a release. |
 | `commit-writer` | 🟢 haiku | Bash, Read | Writes clear conventional commit messages and PR descriptions from the staged diff. Use when the user asks to commit or open a PR. |
 | `doc-writer` | 🟢 haiku | Read, Grep, Glob, Edit, Write | Writes and updates READMEs, API docs, changelogs and code comments from the actual code. Use after features land or when docs are stale. |
+| `i18n-engineer` | 🟢 haiku | Read, Grep, Glob, Edit, Write, Bash | Adds internationalization to apps: extracts strings, sets up the i18n library, pluralization, dates/numbers, RTL. Use when an app needs multiple languages. |
+| `onboarding-guide` | 🟢 haiku | Read, Grep, Glob | Explains an unfamiliar codebase to a new developer: architecture, key flows, where to start, common commands. Use when someone joins a project or asks "how does this work". |
 | `readme-polisher` | 🔵 sonnet | Read, Grep, Glob, Edit, Write | Rewrites READMEs to be scannable and convincing: pitch, quick start, features, examples, FAQ. Use before publishing a project. |
 | `translator` | 🟢 haiku | Read, Grep, Glob, Edit, Write | Translates UI strings, docs and locale files while preserving placeholders, markup and tone. Use for i18n work. |
 

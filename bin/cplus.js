@@ -49,13 +49,15 @@ ${c.bold('Spend & analytics')}
     filters: -d 7 | --since 2026-11-01 | --since month | --until 2026-11-10 | -p <project>
 
 ${c.bold('Claude Code integration')}
+  ${c.cyan('cplus connect')}                 warning + confirmation, connect Claude Code and open your dashboard
+      --yes                              skip the prompt for automation (the warning is still shown)
   ${c.cyan('cplus install')}                 statusline + guard hook (settings.json is backed up first)
       --statusline | --guard              install only one part
   ${c.cyan('cplus uninstall')}               remove everything ClaudePlus added
   ${c.cyan('cplus statusline --preview')}    see all statusline themes
   ${c.cyan('cplus doctor')}                  check setup
 
-${c.bold('Agents')}  ${c.gray('(62 in the library, 10 packs)')}
+${c.bold('Agents')}  ${c.gray('(94 in the library, 12 packs)')}
   ${c.cyan('cplus agents')}                  list user + project agents (on/off, model, tools)
   ${c.cyan('cplus agents on|off <name>')}    enable / disable       (--project for ./.claude/agents)
   ${c.cyan('cplus agents library')}          browse the library      (--category frontend)
@@ -66,9 +68,17 @@ ${c.bold('Agents')}  ${c.gray('(62 in the library, 10 packs)')}
   ${c.cyan('cplus agents new <name>')}       scaffold a new agent   (--model haiku --tools "Read,Grep")
   ${c.cyan('cplus agents show|edit|rm <name>')}
 
+${c.bold('Skills')}  ${c.gray('(18 in the library)')}
+  ${c.cyan('cplus skills')}                  list installed skills (~/.claude/skills, ./.claude/skills)
+  ${c.cyan('cplus skills library')}          browse the skill library
+  ${c.cyan('cplus skills add <name>|all')}   install            ${c.gray('on|off|rm <name> to manage')}
+
+${c.bold('Save money')}
+  ${c.cyan('cplus optimize')}                biggest leaks → one-command fixes   (--apply to do them all)
+
 ${c.bold('Settings')}
   ${c.cyan('cplus budget --daily 20 --monthly 300')} [--stop on]
-  ${c.cyan('cplus lang <code>')}             UI language: en ru uk es pt fr de it pl tr zh ja ko hi id vi
+  ${c.cyan('cplus lang <code>')}             UI language: en ru uk kk es pt fr de it pl tr zh ja ko hi id vi
   ${c.cyan('cplus config [key] [value]')}    e.g. cplus config statusline.theme capsule
   ${c.cyan('cplus prices')}                  price table used for estimates
 `;
@@ -118,10 +128,13 @@ async function main(argv) {
     case 'dash': case 'dashboard': case 'ui': return (await import('../src/server.js')).serve(args);
     case 'statusline': return (await import('../src/statusline.js')).run(args);
     case 'guard': return (await import('../src/guard.js')).run(args);
+    case 'connect': return (await import('../src/commands/connect.js')).run(args);
     case 'install': return (await import('../src/installer.js')).install(args);
     case 'uninstall': return (await import('../src/installer.js')).uninstall(args);
     case 'doctor': return (await import('../src/installer.js')).doctor(args);
     case 'agents': case 'agent': return (await import('../src/commands/agents.js')).run(args);
+    case 'skills': case 'skill': return (await import('../src/commands/skills.js')).run(args);
+    case 'optimize': case 'fix': return (await import('../src/commands/optimize.js')).run(args);
     case 'budget': return (await import('../src/commands/settings.js')).budget(args);
     case 'config': return (await import('../src/commands/settings.js')).config(args);
     case 'lang': case 'language': return (await import('../src/commands/settings.js')).lang(args);

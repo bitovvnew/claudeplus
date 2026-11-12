@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.1.1 — 2026-11-11
+
+### Added
+- **One-step connection:** double-click `auto-connect.bat` on Windows, or run `cplus connect`. A warning and explicit confirmation precede setup; existing settings are backed up before Guard and the statusline are installed and the local dashboard opens with your own statistics.
+- **18 skills** for Claude Code (`~/.claude/skills`): token-diet, spec-driven-dev, human-grade-ui, design-system, motion-design, landing-page, code-review, debugging-playbook, test-strategy, git-workflow, api-design, safe-migrations, performance-profiling, security-checklist, release-checklist, readme-that-sells, refactor-safely, postmortem. Manage them with `cplus skills` and from the dashboard.
+- **32 new agents (94 in total) and 2 new packs.** The Design Studio pack adds design-critic, brand-designer, motion-designer, typography-expert, landing-page-builder, dashboard-designer, svg-illustrator and email-template-builder. The Bots & Automation pack adds Telegram and Discord bots, scrapers, automation, shell and regex agents. Other new agents cover Astro, Angular, Three.js, Electron/Tauri, browser extensions, Unity/Godot, Java/Spring, .NET, Laravel, Rails, Stripe, Supabase/Firebase, RAG, SQL analysis, i18n, privacy, onboarding and cost-auditor.
+- **`cplus optimize [--apply]`** turns the leak report into one-command fixes: install Guard and the statusline, move read-only agents to Haiku, install the Cost Saver pack, and set a budget from your own history.
+- **Spec-driven slash commands:** `/claudeplus:spec`, `plan`, `review`, `handoff`, `ship` and `optimize`.
+- **Kazakh (Қазақша)**, the 17th language.
+- **Dashboard:** a command palette (Ctrl/⌘+K) that can jump to any session, keyboard shortcuts, number count-ups, charts that draw in, staggered entrances, a sliding tab indicator and skeleton loading. All motion respects `prefers-reduced-motion`.
+- **Plusbot,** the new pixel mascot and logo.
+
+### Changed
+- Calmer visual design: paper-and-ink surfaces with color reserved for data, and no decorative gradients.
+- README rewritten in a plainer voice, and a new banner.
+
+### Fixed
+- CI on Node 22: `node --test test/` resolved to a module, so tests now run with an explicit file list.
+- Reinstalling disabled agents or skills preserves their disabled state; pack installs keep existing customizations.
+- Skills respect `--user`, optimization commands identify the target scope, and failed optimization actions return a nonzero exit code.
+- Moving project agents and skills to trash works across drives, preserving the original if copying fails.
+- Leak totals leave their loading state correctly. The command palette is translated, keeps keyboard focus, and remains usable on small screens.
+- Background refreshes keep charts still, and number animations never start below zero.
+
 ## 0.1.0 — 2026-11-11
 
 The first public release.
